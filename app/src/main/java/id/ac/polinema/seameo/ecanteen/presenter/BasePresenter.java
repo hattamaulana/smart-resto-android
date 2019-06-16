@@ -1,16 +1,14 @@
 package id.ac.polinema.seameo.ecanteen.presenter;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 
-import java.util.ArrayList;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.firebase.database.ValueEventListener;
 
 public interface BasePresenter {
-    Object findFirestore(String id, Class ob);
-    Object findRealtimeDB(String id);
-
-    ArrayList<Object> allFirestore();
-    ArrayList<Object> allRealtimeDB(Class c);
+    void getFirestore(OnCompleteListener listener);
+    void getRealtimeDB(ValueEventListener callback);
 
     void storeFirestore(Object ob);
     void storeRealtimeDB(Object ob);
@@ -18,5 +16,5 @@ public interface BasePresenter {
     void removeFirestore(String s);
     void removeRealtimeDB(String s);
 
-    void onAttach(FragmentManager fM, Fragment fg);
+    void onAttach(FragmentTransaction ft, Fragment fg);
 }

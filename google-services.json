@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "170572483397",
+    "firebase_url": "https://polinema-seameo-ecanteen.firebaseio.com",
+    "project_id": "polinema-seameo-ecanteen",
+    "storage_bucket": "polinema-seameo-ecanteen.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:170572483397:android:9f10e5b25b2c25f8",
+        "android_client_info": {
+          "package_name": "id.ac.polinema.ecanteen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "170572483397-rpgmijvn25g61nu6ficqpsdfla1na5f3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsS85c-rEz1lztJ_hLyn9zJQTHROCIXPA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "170572483397-rpgmijvn25g61nu6ficqpsdfla1na5f3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

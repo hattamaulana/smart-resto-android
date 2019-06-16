@@ -2,7 +2,8 @@ package id.ac.polinema.seameo.ecanteen.presenter;
 
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -19,9 +20,12 @@ import java.util.ArrayList;
 
 import id.ac.polinema.seameo.ecanteen.App;
 
+import static android.support.constraint.Constraints.TAG;
+
 public class Presenter implements BasePresenter {
     protected FirebaseFirestore mFirestore;
     protected DatabaseReference mReatimeDb;
+    private Object result;
 
     public Presenter() {
         // Instance Firebase Firestore
@@ -32,55 +36,15 @@ public class Presenter implements BasePresenter {
     }
 
     @Override
-    public Object findFirestore(final String id, final Class ob) {
-        final Object[] temp = new Object[1];
-
-        mFirestore.collection(App.ITEM_COLLECTION).get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot q : task.getResult()) {
-                                if (q.getId().equals(id)) {
-                                    temp[0] = q.toObject(ob);
-                                }
-                            }
-                        }
-                    }
-                });
-
-        return temp[0];
+    public void getFirestore(OnCompleteListener listener) {
+        mFirestore.collection(App.ITEM_COLLECTION).get().addOnCompleteListener(listener);
     }
 
     @Override
-    public Object findRealtimeDB(String id) {
-        return null;
-    }
-
-    @Override
-    public ArrayList<Object> allFirestore() {
-        return null;
-    }
-
-    @Override
-    public ArrayList<Object> allRealtimeDB(final Class c) {
+    public void getRealtimeDB(ValueEventListener callback) {
         final ArrayList<Object> list = new ArrayList<>();
 
-        mReatimeDb.child(App.ORDER_REFERENCE).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot it: dataSnapshot.getChildren()) {
-                    list.add(it.getValue(c));
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        return list;
+        mReatimeDb.child(App.ORDER_REFERENCE).addValueEventListener(callback);
     }
 
     @Override
@@ -90,7 +54,7 @@ public class Presenter implements BasePresenter {
 
     @Override
     public void storeRealtimeDB(Object ob) {
-
+        mReatimeDb.child(App.ORDER_REFERENCE).push().setValue(ob);
     }
 
     @Override
@@ -104,7 +68,7 @@ public class Presenter implements BasePresenter {
     }
 
     @Override
-    public void onAttach(FragmentManager fM, Fragment fg) {
-        fM.beginTransaction().attach(fg).commit();
+    public void onAttach(FragmentTransaction ft, Fragment fg) {
+        ft.commit();
     }
 }
