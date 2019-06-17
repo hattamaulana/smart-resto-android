@@ -5,6 +5,8 @@ import android.app.Application;
 import com.google.firebase.FirebaseApp;
 
 public class App extends Application {
+    private final String TAG = "APP";
+
     // Firestore
     public static final String ITEM_COLLECTION = "items";
     public static final String TRANSACTION_COLLECTION = "transactions";

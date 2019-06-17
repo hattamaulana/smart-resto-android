@@ -1,30 +1,27 @@
 package id.ac.polinema.seameo.ecanteen.presenter;
 
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import id.ac.polinema.seameo.ecanteen.App;
-
-import static android.support.constraint.Constraints.TAG;
 
 public class Presenter implements BasePresenter {
     protected FirebaseFirestore mFirestore;
     protected DatabaseReference mReatimeDb;
+
+    private final String TAG = "PRESENTER";
     private Object result;
 
     public Presenter() {
@@ -36,20 +33,25 @@ public class Presenter implements BasePresenter {
     }
 
     @Override
-    public void getFirestore(OnCompleteListener listener) {
-        mFirestore.collection(App.ITEM_COLLECTION).get().addOnCompleteListener(listener);
+    public void getFirestore(String s, OnCompleteListener listener) {
+        mFirestore.collection(s).get().addOnCompleteListener(listener);
     }
 
     @Override
     public void getRealtimeDB(ValueEventListener callback) {
-        final ArrayList<Object> list = new ArrayList<>();
-
         mReatimeDb.child(App.ORDER_REFERENCE).addValueEventListener(callback);
     }
 
     @Override
-    public void storeFirestore(Object ob) {
-
+    public void storeFirestore(HashMap<String, Object> args) {
+        mFirestore.collection(App.TRANSACTION_COLLECTION)
+                .add(args)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.i(TAG, "onSuccess: Success Save Data");
+                    }
+                });
     }
 
     @Override

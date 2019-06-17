@@ -4,22 +4,30 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import java.util.ArrayList;
 
 import id.ac.polinema.seameo.ecanteen.R;
+import id.ac.polinema.seameo.ecanteen.view.adapter.ScanResultAdapter;
 import id.ac.polinema.seameo.ecanteen.contract.ItemContract;
 import id.ac.polinema.seameo.ecanteen.model.ItemModel;
 import id.ac.polinema.seameo.ecanteen.presenter.scan.ScannerResultPresenter;
-
-import static android.support.constraint.Constraints.TAG;
+import id.ac.polinema.seameo.ecanteen.view.activity.ScanActivity;
 
 public class ScanResultFragment extends Fragment implements ItemContract.View {
+    private final String TAG = "SCAN_RESULT_FRAGMENT";
+
+    private ArrayList<ItemModel> mListItem;
     private ScannerResultPresenter mPresenter;
+    private RecyclerView mRecyclerView;
+    private LinearLayoutManager mLayoutManager;
+    private ScanResultAdapter mAdapter;
 
     @Override
     public void initPresenter() {
@@ -29,9 +37,9 @@ public class ScanResultFragment extends Fragment implements ItemContract.View {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        initPresenter();
-
         View v = inflater.inflate(R.layout.fragment_scan_result, container, false);
+        initPresenter();
+        initView(v);
 
         return v;
     }
@@ -40,12 +48,49 @@ public class ScanResultFragment extends Fragment implements ItemContract.View {
     public void onStart() {
         super.onStart();
 
-        mPresenter.show(new ItemContract.ScannerResult.Callback() {
-            @Override
-            public void setView(ArrayList<ItemModel> list) {
-                // Set List Adapter
-                Log.i(TAG, "setView: "+ list.size());
-            }
-        });
+        mPresenter.show(listItemCallback);
     }
+
+    private void initView(View v) {
+        mRecyclerView = (RecyclerView) v.findViewById(R.id.list_scan_result);
+        mLayoutManager = new LinearLayoutManager(getContext());
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+        Button scan = (Button) v.findViewById(R.id.btn_add_scan);
+        scan.setOnClickListener(onButtonScanClicked);
+
+        Button transaction = (Button) v.findViewById(R.id.btn_checkout);
+        transaction.setOnClickListener(onButtonPayClicked);
+    }
+
+    private ItemContract.ScannerResult.Callback listItemCallback = new ItemContract.ScannerResult.Callback() {
+        @Override
+        public void setView(ArrayList<ItemModel> list) {
+            if (list.size() > 0) {
+                mAdapter = new ScanResultAdapter(list, getContext());
+                mRecyclerView.setLayoutManager(mLayoutManager);
+                mRecyclerView.setAdapter(mAdapter);
+                mAdapter.notifyDataSetChanged();
+            }
+        }
+    };
+
+    private View.OnClickListener onButtonScanClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            ScanActivity.deleteData = false;
+            getFragmentManager().beginTransaction()
+                    .replace(ScanActivity.container, new ScannerFragment())
+                    .commit();
+        }
+    };
+
+    private View.OnClickListener onButtonPayClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            getFragmentManager().beginTransaction()
+                    .replace(ScanActivity.container, new TransactionFragment())
+                    .commit();
+        }
+    };
 }

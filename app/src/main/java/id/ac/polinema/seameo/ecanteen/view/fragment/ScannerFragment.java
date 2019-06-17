@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -28,20 +30,18 @@ public class ScannerFragment extends Fragment implements ItemContract.View {
     private AlertDialog mAlertDialog;
     private int mBack = 0;
 
-    public String NAME = "scanner";
-    public String BACK_STACK = null;
-
     @Override
     public void initPresenter() {
         mPresenter = new ScannerPresenter();
     }
 
+    @Nullable
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         initPresenter();
         initView();
+
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
@@ -85,9 +85,19 @@ public class ScannerFragment extends Fragment implements ItemContract.View {
     }
 
     private void processResult(String res) {
-        Log.i(TAG, "processResult: Checking....");
-
         mPresenter.find(res, callbackSave);
+    }
+
+    private void initView() {
+        mAlertDialog = new AlertDialog.Builder(getContext())
+                .setTitle("Peringatan")
+                .setMessage("Jika Anda Kembali Data yang Sudah di Scan Akan Hilang.")
+                .setPositiveButton("Biarkan", positiveButton())
+                .setNegativeButton("Batalkan", negativeButton())
+                .create();
+
+        mProggressDialog = new ProgressDialog(getContext());
+        mProggressDialog.setTitle("Loading");
     }
 
     private ItemContract.Scanner.Callback callbackSave = new ItemContract.Scanner.Callback() {
@@ -96,6 +106,7 @@ public class ScannerFragment extends Fragment implements ItemContract.View {
             mProggressDialog.dismiss();
             ItemModel item = q.toObject(ItemModel.class);
                       item.setId(q.getId());
+                      item.setCount(1);
 
             mPresenter.save(item);
 
@@ -130,18 +141,5 @@ public class ScannerFragment extends Fragment implements ItemContract.View {
                 onStart();
             }
         };
-    }
-
-    private void initView() {
-        mAlertDialog = new AlertDialog.Builder(getContext())
-                .setTitle("Peringatan")
-                .setMessage("Jika Anda Kembali Data yang Sudah di Scan Akan Hilang.")
-                .setPositiveButton("Biarkan", positiveButton())
-                .setNegativeButton("Batalkan", negativeButton())
-                .create();
-
-        mProggressDialog = new ProgressDialog(getContext());
-        mProggressDialog.setTitle("Sedang Mencocokkan Data");
-        mProggressDialog.setMessage("Loading");
     }
 }

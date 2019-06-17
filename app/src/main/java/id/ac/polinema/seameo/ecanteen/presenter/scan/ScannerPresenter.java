@@ -1,11 +1,8 @@
 package id.ac.polinema.seameo.ecanteen.presenter.scan;
 
-import android.app.ProgressDialog;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -18,9 +15,8 @@ import id.ac.polinema.seameo.ecanteen.model.ItemModel;
 import id.ac.polinema.seameo.ecanteen.presenter.Presenter;
 import id.ac.polinema.seameo.ecanteen.view.activity.ScanActivity;
 
-import static android.support.constraint.Constraints.TAG;
-
 public class ScannerPresenter extends Presenter implements ItemContract.Scanner.Presenter {
+    private static final String TAG = "SCANNER_PRESENTER";
 
     public ScannerPresenter() {
         super();
@@ -28,7 +24,7 @@ public class ScannerPresenter extends Presenter implements ItemContract.Scanner.
 
     @Override
     public void find(String s, ItemContract.Scanner.Callback callback) {
-        super.getFirestore(getItem(s, callback));
+        super.getFirestore(App.ITEM_COLLECTION, getItem(s, callback));
     }
 
     @Override

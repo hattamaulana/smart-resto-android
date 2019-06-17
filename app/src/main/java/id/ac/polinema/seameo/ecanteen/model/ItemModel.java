@@ -1,6 +1,16 @@
 package id.ac.polinema.seameo.ecanteen.model;
 
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+
 public class ItemModel {
+    public static final String ID = "id";
+    public static final String NAME = "name";
+    public static final String IMAGE_URI = "imgUri";
+    public static final String PRICE = "price";
+    public static final String COUNT = "count";
+
     private String id;
     private String name;
     private String imgUri;

@@ -12,6 +12,9 @@ import id.ac.polinema.seameo.ecanteen.view.fragment.ScannerFragment;
 
 public class ScanActivity extends AppCompatActivity implements ItemContract.View {
     public static final int container = R.id.frame_scan_activity;
+    public static boolean deleteData = true;
+
+    private final String TAG = "SCAN_ACTIVITY";
 
     private ScannerPresenter mPresenter;
 
@@ -31,7 +34,12 @@ public class ScanActivity extends AppCompatActivity implements ItemContract.View
 
     @Override
     protected void onStop() {
-        mPresenter.remove();
+        if (deleteData) {
+            mPresenter.remove();
+        } else {
+            deleteData = true;
+        }
+
         super.onStop();
     }
 

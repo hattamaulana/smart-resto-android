@@ -33,7 +33,25 @@
             android:paddingTop="16dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:hint="Masukkan Uang Anda"
+            android:hint="ex: 1000"
     />
+
+    <EditText
+        android:id="@+id/edtxt_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/rectangle_border"
+        android:hint="ex: Aman"
+        android:paddingLeft="8dp"
+        android:paddingTop="16dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@id/edtxt_money"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
