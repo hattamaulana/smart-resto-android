@@ -12,14 +12,13 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import id.ac.polinema.seameo.ecanteen.App;
 
 public class Presenter implements BasePresenter {
     protected FirebaseFirestore mFirestore;
-    protected DatabaseReference mReatimeDb;
+    protected DatabaseReference mRealtimeDb;
 
     private final String TAG = "PRESENTER";
     private Object result;
@@ -29,7 +28,7 @@ public class Presenter implements BasePresenter {
         mFirestore = FirebaseFirestore.getInstance();
 
         // Instance Firebase Realtime Database
-        mReatimeDb = FirebaseDatabase.getInstance().getReference(App.MAIN_REFERENCE);
+        mRealtimeDb = FirebaseDatabase.getInstance().getReference(App.MAIN_REFERENCE);
     }
 
     @Override
@@ -39,7 +38,7 @@ public class Presenter implements BasePresenter {
 
     @Override
     public void getRealtimeDB(ValueEventListener callback) {
-        mReatimeDb.child(App.ORDER_REFERENCE).addValueEventListener(callback);
+        mRealtimeDb.child(App.ORDER_REFERENCE).addValueEventListener(callback);
     }
 
     @Override
@@ -56,7 +55,7 @@ public class Presenter implements BasePresenter {
 
     @Override
     public void storeRealtimeDB(Object ob) {
-        mReatimeDb.child(App.ORDER_REFERENCE).push().setValue(ob);
+        mRealtimeDb.child(App.ORDER_REFERENCE).push().setValue(ob);
     }
 
     @Override
@@ -66,7 +65,7 @@ public class Presenter implements BasePresenter {
 
     @Override
     public void removeRealtimeDB(String s) {
-        mReatimeDb.child(s).setValue("");
+        mRealtimeDb.child(s).setValue("");
     }
 
     @Override

@@ -2,6 +2,7 @@ package id.ac.polinema.seameo.ecanteen.presenter.scan;
 
 import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,14 +28,16 @@ public class ScannerResultPresenter extends Presenter implements ItemContract.Sc
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<ItemModel> list = new ArrayList<>();
+                String key = "";
 
                 for (DataSnapshot it : dataSnapshot.getChildren()) {
                     ItemModel item = it.getValue(ItemModel.class);
-                    item.setCount(0);
+                    item.setKey(it.getKey());
                     list.add(item);
+                    key = it.getKey();
                 }
 
-                callback.setView(list);
+                callback.setView(list, key);
             }
 
             @Override

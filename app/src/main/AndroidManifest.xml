@@ -12,14 +12,14 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".view.activity.HomeActivity">
+        </activity>
+
+        <activity android:name=".view.activity.ScanActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".view.activity.ScanActivity" />
 
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"

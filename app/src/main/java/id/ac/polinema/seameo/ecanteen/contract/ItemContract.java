@@ -28,7 +28,7 @@ public class ItemContract {
         }
 
         public interface Callback {
-            void setView(ArrayList<ItemModel> list);
+            void setView(ArrayList<ItemModel> list, String id);
         }
     }
 

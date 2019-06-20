@@ -1,40 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list_transaction"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
-            android:id="@+id/btn_pay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Bayar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-    />
+        android:id="@+id/btn_pay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Bayar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <EditText
-            android:id="@+id/edtxt_money"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/btn_pay"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="24dp"
-            android:layout_marginStart="24dp"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginRight="24dp"
-            android:layout_marginEnd="24dp"
-            android:background="@drawable/rectangle_border"
-            android:paddingBottom="16dp"
-            android:paddingTop="16dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:hint="ex: 1000"
-    />
+        android:id="@+id/edtxt_money"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/rectangle_border"
+        android:hint="ex: 1000"
+        android:paddingLeft="8dp"
+        android:paddingTop="8dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@id/btn_pay"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <EditText
         android:id="@+id/edtxt_name"
@@ -42,16 +50,42 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/rectangle_border"
         android:hint="ex: Aman"
         android:paddingLeft="8dp"
-        android:paddingTop="16dp"
+        android:paddingTop="8dp"
         android:paddingRight="8dp"
-        android:paddingBottom="16dp"
+        android:paddingBottom="8dp"
         app:layout_constraintBottom_toTopOf="@id/edtxt_money"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:text="Total :"
+        android:textStyle="bold"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toTopOf="@+id/edtxt_name"
+        app:layout_constraintStart_toStartOf="@+id/edtxt_name" />
+
+    <TextView
+        android:id="@+id/txt_payment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="Rp. 1000000"
+        android:textStyle="bold"
+        android:textSize="17sp"
+        android:textAlignment="gravity"
+        android:gravity="right"
+        app:layout_constraintBottom_toBottomOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="@+id/edtxt_name"
+        app:layout_constraintStart_toEndOf="@+id/textView" />
 
 </android.support.constraint.ConstraintLayout>

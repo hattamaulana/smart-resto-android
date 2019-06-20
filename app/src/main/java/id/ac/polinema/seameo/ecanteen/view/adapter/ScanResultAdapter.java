@@ -2,15 +2,23 @@ package id.ac.polinema.seameo.ecanteen.view.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import id.ac.polinema.seameo.ecanteen.App;
 import id.ac.polinema.seameo.ecanteen.R;
 import id.ac.polinema.seameo.ecanteen.contract.ListResultContract;
 import id.ac.polinema.seameo.ecanteen.model.ItemModel;
@@ -22,10 +30,17 @@ public class ScanResultAdapter extends RecyclerView.Adapter<ScanResultAdapter.Ho
     private ListResultPresenter mPresenter;
     private ArrayList<ItemModel> mListItem;
     private Context mContext;
+    private String mKey;
 
-    public ScanResultAdapter(ArrayList<ItemModel> list, Context context){
+    public ScanResultAdapter(ArrayList<ItemModel> list, Context context, String id){
         this.mListItem = list;
         this.mContext = context;
+        this.mKey = id;
+    }
+
+    @Override
+    public void initPresenter() {
+        mPresenter = new ListResultPresenter();
     }
 
     @NonNull
@@ -42,9 +57,9 @@ public class ScanResultAdapter extends RecyclerView.Adapter<ScanResultAdapter.Ho
         ItemModel item = mListItem.get(i);
 
         holder.txtName.setText(item.getName());
-        holder.txtCount.setText(item.getCount());
-        holder.btnIncrement.setOnClickListener(btnIncrementClicked(item.getId(), holder.txtCount));
-        holder.btnDecrement.setOnClickListener(btnDecrementClicked(item.getId(), holder.txtCount));
+        holder.txtCount.setText(String.valueOf(item.getCount()));
+        holder.btnIncrement.setOnClickListener(btnIncrementClicked(item, holder));
+        holder.btnDecrement.setOnClickListener(btnDecrementClicked(item, holder));
     }
 
     @Override
@@ -55,38 +70,41 @@ public class ScanResultAdapter extends RecyclerView.Adapter<ScanResultAdapter.Ho
             return mListItem.size();
     }
 
-    private View.OnClickListener btnIncrementClicked(final String id, final TextView textView) {
+    private View.OnClickListener btnIncrementClicked(final ItemModel item, final Holder holder) {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int x = Integer.valueOf(textView.getText().toString());
-                    x++;
-                textView.setText(String.valueOf(x));
-                mPresenter.update(id, x);
+                int x = Integer.valueOf(holder.txtCount.getText().toString()) + 1;
+                item.setCount(x);
+
+                FirebaseDatabase
+                    .getInstance()
+                    .getReference(App.MAIN_REFERENCE)
+                    .child(App.ORDER_REFERENCE).child(item.getKey())
+                    .updateChildren(item.toMap(item));
             }
         };
     }
 
-    private View.OnClickListener btnDecrementClicked(final String id, final TextView textView) {
+    private View.OnClickListener btnDecrementClicked(final ItemModel item, final Holder holder) {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int x = Integer.valueOf(textView.getText().toString());
-                if (x > 0) {
-                    x--;
-                    textView.setText(String.valueOf(x));
-                    mPresenter.update(id, x);
+                int x = Integer.valueOf(holder.txtCount.getText().toString());
+                if (x > 1) {
+                    item.setCount((x - 1));
+
+                    FirebaseDatabase
+                        .getInstance()
+                        .getReference(App.MAIN_REFERENCE)
+                        .child(App.ORDER_REFERENCE).child(item.getKey())
+                        .updateChildren(item.toMap(item));
                 }
             }
         };
     }
 
-    @Override
-    public void initPresenter() {
-        mPresenter = new ListResultPresenter();
-    }
-
-    public class Holder extends RecyclerView.ViewHolder {
+    class Holder extends RecyclerView.ViewHolder {
         private TextView txtName;
         private TextView txtCount;
         private ImageView btnIncrement;

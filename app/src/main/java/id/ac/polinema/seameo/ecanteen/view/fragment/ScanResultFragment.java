@@ -65,9 +65,9 @@ public class ScanResultFragment extends Fragment implements ItemContract.View {
 
     private ItemContract.ScannerResult.Callback listItemCallback = new ItemContract.ScannerResult.Callback() {
         @Override
-        public void setView(ArrayList<ItemModel> list) {
+        public void setView(ArrayList<ItemModel> list, String id) {
             if (list.size() > 0) {
-                mAdapter = new ScanResultAdapter(list, getContext());
+                mAdapter = new ScanResultAdapter(list, getContext(), id);
                 mRecyclerView.setLayoutManager(mLayoutManager);
                 mRecyclerView.setAdapter(mAdapter);
                 mAdapter.notifyDataSetChanged();
@@ -80,8 +80,8 @@ public class ScanResultFragment extends Fragment implements ItemContract.View {
         public void onClick(View v) {
             ScanActivity.deleteData = false;
             getFragmentManager().beginTransaction()
-                    .replace(ScanActivity.container, new ScannerFragment())
-                    .commit();
+                .replace(ScanActivity.container, new ScannerFragment())
+                .commit();
         }
     };
 
@@ -89,8 +89,8 @@ public class ScanResultFragment extends Fragment implements ItemContract.View {
         @Override
         public void onClick(View v) {
             getFragmentManager().beginTransaction()
-                    .replace(ScanActivity.container, new TransactionFragment())
-                    .commit();
+                .replace(ScanActivity.container, new TransactionFragment())
+                .commit();
         }
     };
 }

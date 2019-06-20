@@ -97,7 +97,7 @@ public class ScannerFragment extends Fragment implements ItemContract.View {
                 .create();
 
         mProggressDialog = new ProgressDialog(getContext());
-        mProggressDialog.setTitle("Loading");
+        mProggressDialog.setMessage("Loading");
     }
 
     private ItemContract.Scanner.Callback callbackSave = new ItemContract.Scanner.Callback() {
