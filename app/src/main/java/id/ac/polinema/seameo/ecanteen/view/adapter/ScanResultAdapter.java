@@ -2,21 +2,16 @@ package id.ac.polinema.seameo.ecanteen.view.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import id.ac.polinema.seameo.ecanteen.App;
 import id.ac.polinema.seameo.ecanteen.R;
@@ -60,6 +55,7 @@ public class ScanResultAdapter extends RecyclerView.Adapter<ScanResultAdapter.Ho
         holder.txtCount.setText(String.valueOf(item.getCount()));
         holder.btnIncrement.setOnClickListener(btnIncrementClicked(item, holder));
         holder.btnDecrement.setOnClickListener(btnDecrementClicked(item, holder));
+        holder.btnDelete.setOnClickListener(btnDeleteClicked(item));
     }
 
     @Override
@@ -104,11 +100,25 @@ public class ScanResultAdapter extends RecyclerView.Adapter<ScanResultAdapter.Ho
         };
     }
 
+    private View.OnClickListener btnDeleteClicked(final ItemModel item){
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseDatabase
+                        .getInstance()
+                        .getReference(App.MAIN_REFERENCE)
+                        .child(App.ORDER_REFERENCE).child(item.getKey())
+                        .removeValue();
+            }
+        };
+    }
+
     class Holder extends RecyclerView.ViewHolder {
         private TextView txtName;
         private TextView txtCount;
         private ImageView btnIncrement;
         private ImageView btnDecrement;
+        private ImageView btnDelete;
 
         public Holder(@NonNull View itemView) {
             super(itemView);
@@ -116,6 +126,7 @@ public class ScanResultAdapter extends RecyclerView.Adapter<ScanResultAdapter.Ho
             txtCount = (TextView) itemView.findViewById(R.id.txt_item_count);
             btnIncrement = (ImageView) itemView.findViewById(R.id.btn_increment);
             btnDecrement = (ImageView) itemView.findViewById(R.id.btn_decrement);
+            btnDelete = (ImageView) itemView.findViewById(R.id.btn_delete);
         }
     }
 }

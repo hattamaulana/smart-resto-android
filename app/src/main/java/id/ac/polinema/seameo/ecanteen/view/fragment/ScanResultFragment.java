@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -71,6 +72,17 @@ public class ScanResultFragment extends Fragment implements ItemContract.View {
                 mRecyclerView.setLayoutManager(mLayoutManager);
                 mRecyclerView.setAdapter(mAdapter);
                 mAdapter.notifyDataSetChanged();
+            } else {
+                try {
+                    Toast.makeText(getContext(), "Silahkan Lakukan Scanning Kembali", Toast.LENGTH_SHORT)
+                         .show();
+
+                    getFragmentManager()
+                       .beginTransaction()
+                       .replace(ScanActivity.container, new ScannerFragment())
+                       .commit();
+
+                } catch (NullPointerException e) { }
             }
         }
     };
