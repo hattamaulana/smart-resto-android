@@ -12,12 +12,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
 import id.ac.polinema.seameo.ecanteen.App;
 import id.ac.polinema.seameo.ecanteen.contract.ItemContract;
 import id.ac.polinema.seameo.ecanteen.contract.TransactionContract;
+import id.ac.polinema.seameo.ecanteen.model.ItemModel;
 import id.ac.polinema.seameo.ecanteen.model.TransactionModel;
 import id.ac.polinema.seameo.ecanteen.presenter.Presenter;
 import id.ac.polinema.seameo.ecanteen.view.activity.ScanActivity;
@@ -71,17 +73,25 @@ public class TransactionPresenter extends Presenter implements TransactionContra
         };
     }
 
-    private ValueEventListener getItem(ItemContract.ScannerResult.Callback callback) {
+    private ValueEventListener getItem(final ItemContract.ScannerResult.Callback callback) {
         return new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<ItemModel> list = new ArrayList<>();
+                String key = "";
 
+                for (DataSnapshot it : dataSnapshot.getChildren()) {
+                    ItemModel item = it.getValue(ItemModel.class);
+                    item.setKey(it.getKey());
+                    list.add(item);
+                    key = it.getKey();
+                }
+
+                callback.setView(list, key);
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
         };
     }
 

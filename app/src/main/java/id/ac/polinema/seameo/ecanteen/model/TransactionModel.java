@@ -1,5 +1,7 @@
 package id.ac.polinema.seameo.ecanteen.model;
 
+import java.util.ArrayList;
+
 public class TransactionModel {
     public static final String NAME = "name";
     public static final String DATE_TIME = "date_time";
@@ -10,16 +12,16 @@ public class TransactionModel {
 
     private String name;
     private String dateTime;
-    private String[] items;
+    private ArrayList<String> items;
     private int money;
     private int cashback;
     private int payment;
 
-    public String[] getItems() {
+    public ArrayList<String> getItems() {
         return items;
     }
 
-    public void setItems(String[] items) {
+    public void setItems(ArrayList<String> items) {
         this.items = items;
     }
 

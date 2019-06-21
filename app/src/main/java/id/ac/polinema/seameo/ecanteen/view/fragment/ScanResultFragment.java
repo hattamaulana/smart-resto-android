@@ -100,6 +100,7 @@ public class ScanResultFragment extends Fragment implements ItemContract.View {
     private View.OnClickListener onButtonPayClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            ScanActivity.deleteData = false;
             getFragmentManager().beginTransaction()
                 .replace(ScanActivity.container, new TransactionFragment())
                 .commit();

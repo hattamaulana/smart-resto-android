@@ -14,6 +14,7 @@ public class App extends Application {
     // Realtime Database
     public static final String MAIN_REFERENCE = "ecanteen";
     public static final String ORDER_REFERENCE = "order";
+    public static final String KITCHEN_QUEUE = "queue";
 
     @Override
     public void onCreate() {

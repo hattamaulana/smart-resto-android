@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,21 +17,29 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.google.firebase.Timestamp;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.Date;
+
+import id.ac.polinema.seameo.ecanteen.App;
 import id.ac.polinema.seameo.ecanteen.R;
 import id.ac.polinema.seameo.ecanteen.contract.ItemContract;
 import id.ac.polinema.seameo.ecanteen.contract.TransactionContract;
 import id.ac.polinema.seameo.ecanteen.model.ItemModel;
+import id.ac.polinema.seameo.ecanteen.model.KitchenQueueModel;
 import id.ac.polinema.seameo.ecanteen.model.TransactionModel;
 import id.ac.polinema.seameo.ecanteen.presenter.transaction.TransactionPresenter;
+import id.ac.polinema.seameo.ecanteen.view.activity.ScanActivity;
 import id.ac.polinema.seameo.ecanteen.view.adapter.TransactionAdapter;
 
 public class TransactionFragment extends Fragment implements TransactionContract.View {
     private static final String TAG = "TRANSACTION_FRAGMENT";
 
     private TransactionPresenter mPresenter;
-    private String[] mItems;
+    private ArrayList<String> mItems;
+    private ArrayList<ItemModel> mListResult;
     private EditText mName;
     private EditText mMoney;
     private TextView mCountPay;
@@ -39,7 +48,6 @@ public class TransactionFragment extends Fragment implements TransactionContract
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private TransactionAdapter mAdapter;
-    private AlertDialog mDialog;
 
     @Override
     public void initPresenter() {
@@ -50,10 +58,9 @@ public class TransactionFragment extends Fragment implements TransactionContract
     public void onStart() {
         super.onStart();
 
+        mItems = new ArrayList<>();
         mPayment = 0;
         mCashback = 0;
-        mLayoutManager = new LinearLayoutManager(getContext());
-        mLayoutManager.setOrientation(LinearLayout.VERTICAL);
 
         mPresenter.get(itemCallback);
     }
@@ -73,21 +80,20 @@ public class TransactionFragment extends Fragment implements TransactionContract
         @Override
         public void setView(ArrayList<ItemModel> list, String id) {
             if (list.size() > 0) {
+                mListResult = list;
                 mAdapter = new TransactionAdapter(list, getContext());
                 mRecyclerView.setLayoutManager(mLayoutManager);
                 mRecyclerView.setAdapter(mAdapter);
                 mAdapter.notifyDataSetChanged();
 
-                mItems = new String[list.size()];
-
-                int i = 0;
-                int cost = 0;
                 for (ItemModel item : list) {
-                    cost += item.getPrice() * item.getPrice();
-                    mItems[i] = item.getId();
+                    mPayment += item.getPrice() * item.getCount();
+
+                    for (int i = 1; i <= item.getCount(); i++)
+                        mItems.add(item.getId());
                 }
 
-                mCountPay.setText(cost);
+                mCountPay.setText("Rp "+ mPayment);
             }
         }
     };
@@ -104,16 +110,29 @@ public class TransactionFragment extends Fragment implements TransactionContract
             transaction.setItems(mItems);
             transaction.setPayment(mPayment);
             transaction.setCashback(mCashback);
-
             mPresenter.save(transaction);
-            if (mCashback > 0) {
-                new AlertDialog.Builder(getContext())
-                        .setTitle("Info")
-                        .setMessage("Kembalian ")
-                        .setPositiveButton("Oke", positiveButtonCallback)
-                        .create()
-                        .show();
-            }
+
+            ArrayList<KitchenQueueModel.Menu> menus = new ArrayList<>();
+
+            for (ItemModel it: mListResult)
+                menus.add(new KitchenQueueModel.Menu(it.getName(), it.getCount()));
+
+            KitchenQueueModel queue = new KitchenQueueModel(
+                    mName.getText().toString(),
+                    menus
+            );
+
+            FirebaseDatabase.getInstance()
+                    .getReference(App.MAIN_REFERENCE).child(App.KITCHEN_QUEUE)
+                    .push().setValue(queue);
+
+            AlertDialog.Builder dialog = new AlertDialog.Builder(getContext())
+                       .setPositiveButton("Ok", positiveButtonCallback);
+
+            if (mCashback > 0)
+                dialog.setMessage("Kembalian "+ mCashback).create().show();
+            else
+                dialog.setMessage("Terimakasih Telah Membayar dengan Uang Pas").create().show();
         }
     };
 
@@ -123,15 +142,22 @@ public class TransactionFragment extends Fragment implements TransactionContract
         mCountPay = (TextView) v.findViewById(R.id.txt_payment);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.list_transaction);
 
+        mLayoutManager = new LinearLayoutManager(getContext());
+        mLayoutManager.setOrientation(LinearLayout.VERTICAL);
+
         Button btnStoreTransaction = (Button) v.findViewById(R.id.btn_pay);
-               btnStoreTransaction.setOnClickListener(storeTransaction);
+        btnStoreTransaction.setOnClickListener(storeTransaction);
     }
 
     private DialogInterface.OnClickListener positiveButtonCallback = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             dialog.dismiss();
-            getActivity().finish();
+
+            ScanActivity.deleteData = true;
+            getFragmentManager().beginTransaction()
+            .replace(ScanActivity.container, new ScannerFragment())
+            .commit();
         }
     };
 }

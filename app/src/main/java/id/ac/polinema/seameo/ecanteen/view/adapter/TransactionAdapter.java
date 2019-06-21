@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 import id.ac.polinema.seameo.ecanteen.R;
 import id.ac.polinema.seameo.ecanteen.model.ItemModel;
-import id.ac.polinema.seameo.ecanteen.model.TransactionModel;
 
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.Holder> {
     private final String TAG = "TRANSACTION_ADAPTER";
@@ -40,9 +39,9 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         int payment = item.getPrice() * item.getCount();
 
         holder.mName.setText(item.getName());
-        holder.mCount.setText(item.getCount());
-        holder.mPrice.setText(item.getPrice());
-        holder.mPayment.setText(payment);
+        holder.mCount.setText("x " + item.getCount());
+        holder.mPrice.setText("Rp " + item.getPrice());
+        holder.mPayment.setText("Rp "+ payment);
     }
 
     @Override
@@ -61,6 +60,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
         public Holder(@NonNull View itemView) {
             super(itemView);
+
             mName = (TextView) itemView.findViewById(R.id.txt_name_trnsc);
             mCount = (TextView) itemView.findViewById(R.id.txt_count_trnsc);
             mPrice = (TextView) itemView.findViewById(R.id.txt_price_trnsc);
