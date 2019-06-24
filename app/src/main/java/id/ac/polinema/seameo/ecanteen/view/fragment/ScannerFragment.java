@@ -78,7 +78,7 @@ public class ScannerFragment extends Fragment implements ItemContract.View {
                 mBack = 1;
             else {
                 mBack = 2;
-                processResult("yTxVpOyguGaY9D2h1ydv");
+                processResult(res.getContents());
             }
         } else
             super.onActivityResult(requestCode, resultCode, data);

@@ -53,7 +53,7 @@
                     android:textColor="#fff"
                     android:textSize="11sp"
                     android:textStyle="bold"
-                    android:text="SMART KANTIN"
+                    android:text="@string/app_desc"
             />
 
         </LinearLayout>

@@ -1,8 +1,10 @@
 package id.ac.polinema.seameo.ecanteen.view.activity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import id.ac.polinema.seameo.ecanteen.R;
@@ -48,5 +50,29 @@ public class ScanActivity extends AppCompatActivity implements ItemContract.View
 
         // Set Default View as Scanner
         mPresenter.onAttach(fragment, new ScannerFragment());
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Peringatan");
+        alert.setMessage("Apakah Anda Ingin Keluar Dari Aplikasi ini ? ");
+        alert.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                finish();
+            }
+        });
+        alert.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        alert.create();
+        alert.show();
     }
 }

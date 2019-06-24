@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.Timestamp;
 import com.google.firebase.database.FirebaseDatabase;
@@ -101,38 +102,55 @@ public class TransactionFragment extends Fragment implements TransactionContract
     private View.OnClickListener storeTransaction = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            TransactionModel transaction = new TransactionModel();
-            int money = Integer.valueOf(mMoney.getText().toString());
-            mCashback = money - mPayment;
+            String errorMessage = "";
+            boolean isEmptyForName = mName.getText().toString().equals("");
+            boolean isEmptyForMoney = mMoney.getText().toString().equals("");
 
-            transaction.setName(mName.getText().toString());
-            transaction.setMoney(money);
-            transaction.setItems(mItems);
-            transaction.setPayment(mPayment);
-            transaction.setCashback(mCashback);
-            mPresenter.save(transaction);
+            if (! (isEmptyForName && isEmptyForMoney) ) {
+                TransactionModel transaction = new TransactionModel();
+                int money = Integer.valueOf(mMoney.getText().toString());
+                mCashback = money - mPayment;
 
-            ArrayList<KitchenQueueModel.Menu> menus = new ArrayList<>();
+                transaction.setName(mName.getText().toString());
+                transaction.setMoney(money);
+                transaction.setItems(mItems);
+                transaction.setPayment(mPayment);
+                transaction.setCashback(mCashback);
+                mPresenter.save(transaction);
 
-            for (ItemModel it: mListResult)
-                menus.add(new KitchenQueueModel.Menu(it.getName(), it.getCount()));
+                ArrayList<KitchenQueueModel.Menu> menus = new ArrayList<>();
 
-            KitchenQueueModel queue = new KitchenQueueModel(
-                    mName.getText().toString(),
-                    menus
-            );
+                for (ItemModel it: mListResult)
+                    menus.add(new KitchenQueueModel.Menu(it.getName(), it.getCount()));
 
-            FirebaseDatabase.getInstance()
-                    .getReference(App.MAIN_REFERENCE).child(App.KITCHEN_QUEUE)
-                    .push().setValue(queue);
+                KitchenQueueModel queue = new KitchenQueueModel(
+                        mName.getText().toString(),
+                        menus
+                );
 
-            AlertDialog.Builder dialog = new AlertDialog.Builder(getContext())
-                       .setPositiveButton("Ok", positiveButtonCallback);
+                FirebaseDatabase.getInstance()
+                        .getReference(App.MAIN_REFERENCE).child(App.KITCHEN_QUEUE)
+                        .push().setValue(queue);
 
-            if (mCashback > 0)
-                dialog.setMessage("Kembalian "+ mCashback).create().show();
-            else
-                dialog.setMessage("Terimakasih Telah Membayar dengan Uang Pas").create().show();
+                AlertDialog.Builder dialog = new AlertDialog.Builder(getContext())
+                        .setPositiveButton("Ok", positiveButtonCallback);
+
+                if (mCashback > 0)
+                    dialog.setMessage("Kembalian "+ mCashback).create().show();
+                else
+                    dialog.setMessage("Terimakasih Telah Membayar dengan Uang Pas").create().show();
+            } else {
+                if (isEmptyForName)
+                    errorMessage = "Nama";
+
+                if (isEmptyForMoney)
+                errorMessage += (errorMessage.equals("")) ? "Nominal Uang" : " & Nominal Uang";
+            }
+
+            if (! errorMessage.equals("")) {
+                errorMessage = "Text Field "+ errorMessage + " Tidak Boleh Kosong.";
+                Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            }
         }
     };
 
