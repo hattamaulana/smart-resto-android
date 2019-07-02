@@ -1,3 +1,12 @@
+/*
+ * Copyright (c) 2019.
+ *
+ * Author: Mahatta Maulana
+ * Github: https://github.com/hattamaulana
+ *
+ * Last Modified at 7/2/19 4:31 PM
+ */
+
 package id.ac.polinema.seameo.ecanteen.view.adapter;
 
 import android.content.Context;
@@ -14,15 +23,9 @@ import id.ac.polinema.seameo.ecanteen.R;
 import id.ac.polinema.seameo.ecanteen.model.ItemModel;
 
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.Holder> {
-    private final String TAG = "TRANSACTION_ADAPTER";
-
     private ArrayList<ItemModel> mListItem;
-    private Context mContext;
 
-    public TransactionAdapter(ArrayList<ItemModel> list, Context context) {
-        mListItem = list;
-        mContext = context;
-    }
+    public TransactionAdapter(ArrayList<ItemModel> list, Context context) { mListItem = list; }
 
     @NonNull
     @Override
@@ -48,8 +51,9 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     public int getItemCount() {
         if (mListItem != null && mListItem.size() > 0) {
             return mListItem.size();
-        } else
+        } else {
             return 0;
+        }
     }
 
     public class Holder extends RecyclerView.ViewHolder {
@@ -61,10 +65,10 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         public Holder(@NonNull View itemView) {
             super(itemView);
 
-            mName = (TextView) itemView.findViewById(R.id.txt_name_trnsc);
-            mCount = (TextView) itemView.findViewById(R.id.txt_count_trnsc);
-            mPrice = (TextView) itemView.findViewById(R.id.txt_price_trnsc);
-            mPayment = (TextView) itemView.findViewById(R.id.txt_payment_trnsc);
+            mName = itemView.findViewById(R.id.txt_name_trnsc);
+            mCount = itemView.findViewById(R.id.txt_count_trnsc);
+            mPrice = itemView.findViewById(R.id.txt_price_trnsc);
+            mPayment = itemView.findViewById(R.id.txt_payment_trnsc);
         }
     }
 }

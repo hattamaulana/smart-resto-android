@@ -1,3 +1,12 @@
+/*
+ * Copyright (c) 2019.
+ *
+ * Author: Mahatta Maulana
+ * Github: https://github.com/hattamaulana
+ *
+ * Last Modified at 7/2/19 4:31 PM
+ */
+
 package id.ac.polinema.seameo.ecanteen.view.fragment;
 
 import android.os.Bundle;
@@ -53,14 +62,14 @@ public class ScanResultFragment extends Fragment implements ItemContract.View {
     }
 
     private void initView(View v) {
-        mRecyclerView = (RecyclerView) v.findViewById(R.id.list_scan_result);
+        mRecyclerView = v.findViewById(R.id.list_scan_result);
         mLayoutManager = new LinearLayoutManager(getContext());
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        Button scan = (Button) v.findViewById(R.id.btn_add_scan);
+        Button scan = v.findViewById(R.id.btn_add_scan);
         scan.setOnClickListener(onButtonScanClicked);
 
-        Button transaction = (Button) v.findViewById(R.id.btn_checkout);
+        Button transaction = v.findViewById(R.id.btn_checkout);
         transaction.setOnClickListener(onButtonPayClicked);
     }
 

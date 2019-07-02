@@ -1,3 +1,12 @@
+/*
+ * Copyright (c) 2019.
+ *
+ * Author: Mahatta Maulana
+ * Github: https://github.com/hattamaulana
+ *
+ * Last Modified at 6/24/19 3:51 PM
+ */
+
 package id.ac.polinema.seameo.ecanteen;
 
 import android.app.Application;
@@ -7,7 +16,7 @@ import android.support.multidex.MultiDex;
 import com.google.firebase.FirebaseApp;
 
 public class App extends Application {
-    private final String TAG = "APP";
+    public static final String TAG = "SEAMEO-KANTIN";
 
     // Firestore
     public static final String ITEM_COLLECTION = "items";
