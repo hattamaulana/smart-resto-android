@@ -1,3 +1,12 @@
+/*
+ * Copyright (c) 2019.
+ *
+ * Author: Mahatta Maulana
+ * Github: https://github.com/hattamaulana
+ *
+ * Last Modified at 6/21/19 10:45 AM
+ */
+
 package id.ac.polinema.seameo.ecanteen.presenter;
 
 import android.support.v4.app.Fragment;
@@ -23,12 +32,18 @@ public class Presenter implements BasePresenter {
     private final String TAG = "PRESENTER";
     private Object result;
 
+    /**
+     * @method Constructore
+     * Initiation Firebase Firestore and RealtimeDB
+     */
     public Presenter() {
-        // Instance Firebase Firestore
-        mFirestore = FirebaseFirestore.getInstance();
+        // Initiation Firebase Firestore
+        mFirestore =
+                FirebaseFirestore.getInstance();
 
-        // Instance Firebase Realtime Database
-        mRealtimeDb = FirebaseDatabase.getInstance().getReference(App.MAIN_REFERENCE);
+        // initiation Firebase Realtime Database
+        mRealtimeDb =
+                FirebaseDatabase.getInstance().getReference(App.MAIN_REFERENCE);
     }
 
     @Override
@@ -56,11 +71,6 @@ public class Presenter implements BasePresenter {
     @Override
     public void storeRealtimeDB(Object ob) {
         mRealtimeDb.child(App.ORDER_REFERENCE).push().setValue(ob);
-    }
-
-    @Override
-    public void removeFirestore(String s) {
-
     }
 
     @Override

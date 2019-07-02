@@ -1,3 +1,12 @@
+/*
+ * Copyright (c) 2019.
+ *
+ * Author: Mahatta Maulana
+ * Github: https://github.com/hattamaulana
+ *
+ * Last Modified at 6/25/19 9:51 AM
+ */
+
 package id.ac.polinema.seameo.ecanteen.view.fragment;
 
 import android.app.AlertDialog;
@@ -74,7 +83,7 @@ public class ScannerFragment extends Fragment implements ItemContract.View {
         Log.i(TAG, "onActivityResult: "+ res.getContents());
 
         if (res != null) {
-            if (res.getContents() != null)
+            if (res.getContents() == null)
                 mBack = 1;
             else {
                 mBack = 2;

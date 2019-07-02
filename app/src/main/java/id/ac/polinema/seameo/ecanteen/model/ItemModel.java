@@ -1,3 +1,12 @@
+/*
+ * Copyright (c) 2019.
+ *
+ * Author: Mahatta Maulana
+ * Github: https://github.com/hattamaulana
+ *
+ * Last Modified at 6/21/19 12:14 PM
+ */
+
 package id.ac.polinema.seameo.ecanteen.model;
 
 import java.util.HashMap;
@@ -6,12 +15,12 @@ import java.util.Map;
 import javax.annotation.meta.Exclusive;
 
 public class ItemModel {
-    public static final String KEY = "key";
-    public static final String ID = "id";
-    public static final String NAME = "name";
-    public static final String IMAGE_URI = "imgUri";
-    public static final String PRICE = "price";
-    public static final String COUNT = "count";
+    public static String KEY = "key";
+    public static String ID = "id";
+    public static String NAME = "name";
+    public static String IMAGE_URI = "imgUri";
+    public static String PRICE = "price";
+    public static String COUNT = "count";
 
     private String key;
     private String id;
@@ -24,11 +33,11 @@ public class ItemModel {
     public Map<String, Object> toMap(ItemModel item) {
         HashMap<String, Object> data = new HashMap<>();
 
-        data.put(ItemModel.ID, item.getId());
-        data.put(ItemModel.NAME, item.getName());
-        data.put(ItemModel.IMAGE_URI, item.getImgUri());
-        data.put(ItemModel.PRICE, item.getPrice());
-        data.put(ItemModel.COUNT, item.getCount());
+        data.put(ID, item.getId());
+        data.put(NAME, item.getName());
+        data.put(IMAGE_URI, item.getImgUri());
+        data.put(PRICE, item.getPrice());
+        data.put(COUNT, item.getCount());
 
         return data;
     }

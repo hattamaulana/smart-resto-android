@@ -1,3 +1,12 @@
+/*
+ * Copyright (c) 2019.
+ *
+ * Author: Mahatta Maulana
+ * Github: https://github.com/hattamaulana
+ *
+ * Last Modified at 7/2/19 4:31 PM
+ */
+
 package id.ac.polinema.seameo.ecanteen.view.adapter;
 
 import android.content.Context;
@@ -20,8 +29,6 @@ import id.ac.polinema.seameo.ecanteen.model.ItemModel;
 import id.ac.polinema.seameo.ecanteen.presenter.scan.ListResultPresenter;
 
 public class ScanResultAdapter extends RecyclerView.Adapter<ScanResultAdapter.Holder> implements ListResultContract.View {
-    private final String TAG = "SCAN_RESULT_ADAPTER";
-
     private ListResultPresenter mPresenter;
     private ArrayList<ItemModel> mListItem;
     private Context mContext;
@@ -122,11 +129,11 @@ public class ScanResultAdapter extends RecyclerView.Adapter<ScanResultAdapter.Ho
 
         public Holder(@NonNull View itemView) {
             super(itemView);
-            txtName = (TextView) itemView.findViewById(R.id.txt_item_name);
-            txtCount = (TextView) itemView.findViewById(R.id.txt_item_count);
-            btnIncrement = (ImageView) itemView.findViewById(R.id.btn_increment);
-            btnDecrement = (ImageView) itemView.findViewById(R.id.btn_decrement);
-            btnDelete = (ImageView) itemView.findViewById(R.id.btn_delete);
+            txtName = itemView.findViewById(R.id.txt_item_name);
+            txtCount = itemView.findViewById(R.id.txt_item_count);
+            btnIncrement = itemView.findViewById(R.id.btn_increment);
+            btnDecrement = itemView.findViewById(R.id.btn_decrement);
+            btnDelete = itemView.findViewById(R.id.btn_delete);
         }
     }
 }

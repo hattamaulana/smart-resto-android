@@ -1,14 +1,23 @@
+/*
+ * Copyright (c) 2019.
+ *
+ * Author: Mahatta Maulana
+ * Github: https://github.com/hattamaulana
+ *
+ * Last Modified at 6/21/19 12:14 PM
+ */
+
 package id.ac.polinema.seameo.ecanteen.model;
 
 import java.util.ArrayList;
 
 public class TransactionModel {
-    public static final String NAME = "name";
-    public static final String DATE_TIME = "date_time";
-    public static final String ITEMS = "items";
-    public static final String MONEY = "money";
-    public static final String CASHBACK = "cashback";
-    public static final String PAYMENT = "payment";
+    public static String NAME = "name";
+    public static String DATE_TIME = "date_time";
+    public static String ITEMS = "items";
+    public static String MONEY = "money";
+    public static String CASHBACK = "cashback";
+    public static String PAYMENT = "payment";
 
     private String name;
     private String dateTime;

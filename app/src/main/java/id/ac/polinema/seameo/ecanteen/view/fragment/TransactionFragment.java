@@ -1,3 +1,12 @@
+/*
+ * Copyright (c) 2019.
+ *
+ * Author: Mahatta Maulana
+ * Github: https://github.com/hattamaulana
+ *
+ * Last Modified at 7/2/19 4:31 PM
+ */
+
 package id.ac.polinema.seameo.ecanteen.view.fragment;
 
 import android.app.AlertDialog;
@@ -155,15 +164,15 @@ public class TransactionFragment extends Fragment implements TransactionContract
     };
 
     public void initView(View v) {
-        mName = (EditText) v.findViewById(R.id.edtxt_name);
-        mMoney = (EditText) v.findViewById(R.id.edtxt_money);
-        mCountPay = (TextView) v.findViewById(R.id.txt_payment);
-        mRecyclerView = (RecyclerView) v.findViewById(R.id.list_transaction);
+        mName = v.findViewById(R.id.edtxt_name);
+        mMoney = v.findViewById(R.id.edtxt_money);
+        mCountPay = v.findViewById(R.id.txt_payment);
+        mRecyclerView = v.findViewById(R.id.list_transaction);
 
         mLayoutManager = new LinearLayoutManager(getContext());
         mLayoutManager.setOrientation(LinearLayout.VERTICAL);
 
-        Button btnStoreTransaction = (Button) v.findViewById(R.id.btn_pay);
+        Button btnStoreTransaction = v.findViewById(R.id.btn_pay);
         btnStoreTransaction.setOnClickListener(storeTransaction);
     }
 
