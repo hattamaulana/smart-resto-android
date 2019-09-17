@@ -11,9 +11,9 @@ package id.ac.polinema.seameo.ecanteen.view.activity;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import id.ac.polinema.seameo.ecanteen.R;
 import id.ac.polinema.seameo.ecanteen.contract.ItemContract;

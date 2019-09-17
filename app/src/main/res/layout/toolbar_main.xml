@@ -7,7 +7,7 @@
   ~ Last Modified at 6/24/19 12:27 PM
   -->
 
-<android.support.v7.widget.Toolbar
+<androidx.appcompat.widget.Toolbar
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
@@ -18,7 +18,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent" >
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="16dp"
@@ -66,5 +66,5 @@
             />
 
         </LinearLayout>
-    </android.support.constraint.ConstraintLayout>
-</android.support.v7.widget.Toolbar>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.appcompat.widget.Toolbar>
