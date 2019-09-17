@@ -7,8 +7,8 @@
  * Last Modified at 6/21/19 10:45 AM
  */
 
-package id.ac.polinema.seameo.ecanteen.view;
+package id.ac.polinema.seameo.ecanteen.view
 
-public interface BaseView {
-    void initPresenter();
+interface BaseView {
+    fun initPresenter()
 }
