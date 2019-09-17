@@ -11,20 +11,67 @@ package id.ac.polinema.seameo.ecanteen.view.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
-public class HomeAdapter extends RecyclerView {
-    public HomeAdapter(@NonNull Context context) {
-        super(context);
+import java.util.List;
+
+import id.ac.polinema.seameo.ecanteen.R;
+import id.ac.polinema.seameo.ecanteen.model.HistoryModel;
+
+public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Holder> {
+    private Context context;
+    private List<HistoryModel> histories;
+
+    public HomeAdapter(Context context) {
+        this.context = context;
     }
 
-    public HomeAdapter(@NonNull Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
+    public void setHistories(List<HistoryModel> histories) {
+        this.histories = histories;
     }
 
-    public HomeAdapter(@NonNull Context context, @Nullable AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
+    @NonNull
+    @Override
+    public Holder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        return new Holder(
+                LayoutInflater.from(context)
+                        .inflate(R.layout.adapter_history, viewGroup, false)
+        );
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull Holder holder, int i) {
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return histories.size();
+    }
+
+    public static class Holder extends RecyclerView.ViewHolder {
+        private TextView _orderName;
+        private TextView _waktuOrder;
+        private RecyclerView _items;
+//        private TextView _orderItemName;
+//        private TextView _orderItemPrice;
+//        private TextView _orderCount;
+//        private TextView _total;
+
+        public Holder(@NonNull View itemView) {
+            super(itemView);
+
+            _orderName = itemView.findViewById(R.id.order_name);
+            _waktuOrder = itemView.findViewById(R.id.waktu_order);
+            _items = itemView.findViewById(R.id.recycler);
+//            _orderItemName = itemView.findViewById(R.id.order_item_name);
+//            _orderItemPrice = itemView.findViewById(R.id.order_item_price);
+//            _orderCount = itemView.findViewById(R.id.order_count);
+//            _total = itemView.findViewById(R.id.order_count_price);
+        }
     }
 }

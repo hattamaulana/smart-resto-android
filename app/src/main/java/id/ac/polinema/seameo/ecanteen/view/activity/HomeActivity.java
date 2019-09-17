@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import java.util.ArrayList;
 
@@ -38,6 +39,7 @@ public class HomeActivity extends AppCompatActivity implements TransactionContra
 
         initPresenter();
         initView();
+        initData();
     }
 
     @Override
@@ -59,4 +61,7 @@ public class HomeActivity extends AppCompatActivity implements TransactionContra
         };
     }
 
+    private void initData() {
+        RecyclerView recyclerView = findViewById(R.id.recycler_history);
+    }
 }

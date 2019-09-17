@@ -20,7 +20,6 @@ public class ListResultPresenter extends Presenter implements ListResultContract
 
     public ListResultPresenter() {
         super();
-
         this.realtimeDB = super.mRealtimeDb;
     }
 
