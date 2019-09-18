@@ -9,19 +9,16 @@
 
 package id.ac.polinema.seameo.ecanteen.view.adapter
 
-import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-
-import java.util.ArrayList
-
+import androidx.recyclerview.widget.RecyclerView
 import id.ac.polinema.seameo.ecanteen.R
 import id.ac.polinema.seameo.ecanteen.model.ItemModel
+import java.util.*
 
-class TransactionAdapter(private val mListItem: ArrayList<ItemModel>?, context: Context) : RecyclerView.Adapter<TransactionAdapter.Holder>() {
+class TransactionAdapter(private val mListItem: ArrayList<ItemModel>?) : RecyclerView.Adapter<TransactionAdapter.Holder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): Holder {
         val v = LayoutInflater.from(viewGroup.context)
@@ -49,17 +46,9 @@ class TransactionAdapter(private val mListItem: ArrayList<ItemModel>?, context: 
     }
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val mName: TextView
-        private val mCount: TextView
-        private val mPrice: TextView
-        private val mPayment: TextView
-
-        init {
-
-            mName = itemView.findViewById(R.id.txt_name_trnsc)
-            mCount = itemView.findViewById(R.id.txt_count_trnsc)
-            mPrice = itemView.findViewById(R.id.txt_price_trnsc)
-            mPayment = itemView.findViewById(R.id.txt_payment_trnsc)
-        }
+        val mName: TextView = itemView.findViewById(R.id.txt_name_trnsc)
+        val mCount: TextView = itemView.findViewById(R.id.txt_count_trnsc)
+        val mPrice: TextView = itemView.findViewById(R.id.txt_price_trnsc)
+        val mPayment: TextView = itemView.findViewById(R.id.txt_payment_trnsc)
     }
 }

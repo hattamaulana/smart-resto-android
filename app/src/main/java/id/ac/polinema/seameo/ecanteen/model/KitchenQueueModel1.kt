@@ -13,6 +13,5 @@ import java.util.ArrayList
 
 class KitchenQueueModel(var name: String?, var menus: ArrayList<Menu>?) {
     var key: String? = null
-
     class Menu(var name: String?, var count: Int)
 }
