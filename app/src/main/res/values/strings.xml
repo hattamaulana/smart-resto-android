@@ -8,6 +8,8 @@
   -->
 
 <resources>
-    <string name="app_name">KANTIN PINTAR</string>
+    <string name="app_name">SMART RESTO</string>
     <string name="app_desc">Kantin Pintar Merupakan Inovasi Teknologi Informasi Masa Kini</string>
+    <string name="txtScanner">Scanner</string>
+    <string name="txtHelper">Bantuan</string>
 </resources>

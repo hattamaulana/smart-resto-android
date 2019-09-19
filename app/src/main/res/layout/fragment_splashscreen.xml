@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2019.
+  ~
+  ~ Author: Mahatta Maulana
+  ~ Github: https://github.com/hattamaulana
+  ~
+  ~ Last Modified at 9/19/19 10:58 AM
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/mainColor"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+</androidx.constraintlayout.widget.ConstraintLayout>

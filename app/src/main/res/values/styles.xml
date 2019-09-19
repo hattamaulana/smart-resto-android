@@ -12,9 +12,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <menu name="colorPrimary">@color/colorPrimary</menu>
+        <menu name="colorPrimaryDark">@color/colorPrimaryDark</menu>
+        <menu name="colorAccent">@color/colorAccent</menu>
     </style>
 
 </resources>
