@@ -5,7 +5,7 @@
   ~ Author: Mahatta Maulana
   ~ Github: https://github.com/hattamaulana
   ~
-  ~ Last Modified at 6/24/19 12:00 PM
+  ~ Last Modified at 9/20/19 11:01 PM
   -->
 
 <resources>
@@ -14,5 +14,8 @@
     <color name="colorAccent">#0F99CF</color>
 
     <color name="textPrimary">#FFFFFF</color>
+
     <color name="mainColor">#0984E3</color>
+    <color name="darkColor">#2D3436</color>
+    <color name="softTextColor">#B2BEC3</color>
 </resources>

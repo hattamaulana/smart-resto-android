@@ -4,7 +4,7 @@
   ~ Author: Mahatta Maulana
   ~ Github: https://github.com/hattamaulana
   ~
-  ~ Last Modified at 6/24/19 12:19 PM
+  ~ Last Modified at 9/20/19 11:15 PM
   -->
 
 <resources>
@@ -12,4 +12,10 @@
     <string name="app_desc">Kantin Pintar Merupakan Inovasi Teknologi Informasi Masa Kini</string>
     <string name="txtScanner">Scanner</string>
     <string name="txtHelper">Bantuan</string>
+    <string name="txtName">Nama</string>
+    <string name="txtNominal">Nominal</string>
+    <string name="txtPay">Bayar</string>
+    <string name="txtTotal">Total</string>
+    <string name="txtCheckout">Checkout</string>
+    <string name="txtPayment">Pembayaran</string>
 </resources>

@@ -5,7 +5,7 @@
   ~ Author: Mahatta Maulana
   ~ Github: https://github.com/hattamaulana
   ~
-  ~ Last Modified at 9/20/19 5:42 PM
+  ~ Last Modified at 9/20/19 11:14 PM
   -->
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,7 +30,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="32dp"
-            android:text="Checkout"
+            android:text="@string/txtCheckout"
             android:layout_marginRight="32dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/rectacle_radius_circle"
@@ -59,9 +59,9 @@
             android:id="@+id/lblTotal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="32dp"
+            android:layout_marginStart="32dp"
             android:layout_marginBottom="16dp"
-            android:text="Total"
+            android:text="@string/txtTotal"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/btnCheckout"
@@ -90,7 +90,6 @@
         android:layout_marginBottom="8dp"
         android:background="@color/mainColor"
         android:src="@drawable/ic_add"
-        android:text="Tambah"
         android:textColor="@color/textPrimary"
         app:layout_constraintBottom_toTopOf="@id/containerCheckout"
         app:layout_constraintEnd_toEndOf="parent" />
