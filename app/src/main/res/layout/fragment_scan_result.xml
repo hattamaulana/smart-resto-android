@@ -5,43 +5,68 @@
   ~ Author: Mahatta Maulana
   ~ Github: https://github.com/hattamaulana
   ~
-  ~ Last Modified at 6/24/19 12:00 PM
+  ~ Last Modified at 9/20/19 5:42 PM
   -->
 
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent">
 
-    <Button
-            android:id="@+id/btn_add_scan"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/containerCheckout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        android:orientation="horizontal"
+        android:paddingTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/btnCheckout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Tambah"
-            android:background="@color/colorPrimaryDark"
-            android:textColor="@color/textPrimary"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-    />
-
-    <Button
-            android:id="@+id/btn_checkout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
             android:text="Checkout"
-            app:layout_constraintBottom_toTopOf="@id/btn_add_scan"
-            android:background="@color/colorPrimary"
+            android:layout_marginRight="32dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/rectacle_radius_circle"
             android:textColor="@color/textPrimary"
-            android:layout_marginBottom="24dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-    />
+            android:textSize="19sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/txtTotal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="end"
+            android:textAlignment="textEnd"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@id/btnCheckout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/lblTotal" />
+
+        <TextView
+            android:id="@+id/lblTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginBottom="16dp"
+            android:text="Total"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/btnCheckout"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_scan_result"
@@ -51,9 +76,23 @@
         android:layout_marginBottom="8dp"
         android:scrollbars="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@+id/btn_checkout"
+        app:layout_constraintBottom_toTopOf="@id/containerCheckout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_add_scan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/mainColor"
+        android:src="@drawable/ic_add"
+        android:text="Tambah"
+        android:textColor="@color/textPrimary"
+        app:layout_constraintBottom_toTopOf="@id/containerCheckout"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
