@@ -4,7 +4,7 @@
   ~ Author: Mahatta Maulana
   ~ Github: https://github.com/hattamaulana
   ~
-  ~ Last Modified at 6/16/19 7:30 AM
+  ~ Last Modified at 9/22/19 11:54 PM
   -->
 
 <resources>
@@ -12,9 +12,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <menu name="colorPrimary">@color/colorPrimary</menu>
-        <menu name="colorPrimaryDark">@color/colorPrimaryDark</menu>
-        <menu name="colorAccent">@color/colorAccent</menu>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
 </resources>
