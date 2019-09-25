@@ -4,7 +4,7 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/25/19 2:59 PM
+ * Last Modified at 9/25/19 4:50 PM
  */
 
 package id.ac.polinema.seameo.ecanteen.view.fragment
@@ -15,7 +15,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment.findNavController
@@ -23,6 +22,7 @@ import com.google.zxing.integration.android.IntentIntegrator
 import id.ac.polinema.seameo.ecanteen.R
 import id.ac.polinema.seameo.ecanteen.R.layout.fragment_scanner
 import id.ac.polinema.seameo.ecanteen.view.utils.scanning
+import id.ac.polinema.seameo.ecanteen.view.utils.windowAlert
 import id.ac.polinema.seameo.ecanteen.view_model.ScannerViewModel
 
 class ScannerFragment : Fragment() {
@@ -53,37 +53,43 @@ class ScannerFragment : Fragment() {
                 .parseActivityResult(requestCode, resultCode, data)
         val viewModel = ViewModelProviders.of(this)
                 .get(ScannerViewModel::class.java)
+        val barcode = result.contents
 
-        if (result.contents == null) {
-            Log.i(TAG, "Result : ${result.contents}")
+        Log.i(TAG, "Result : $barcode")
 
-            when (arg) {
-                ADD_MENU -> {
+        when (arg) {
+            ADD_MENU -> if (barcode != null) {
                     findNavController(this).navigate(R.id.orderDest)
-                }
-
-                CALL_WAITER -> {
-                    findNavController(this).navigate(R.id.statusDest)
+            } else {
+                windowAlert(context!!, "Peringatan", "Semua menu yang di order akan di hapus.") {
+                    it.setPositiveButton("Ya") { dialog, _ ->
+                        findNavController(this).popBackStack()
+                        dialog.dismiss()
+                    }
+                    it.setNegativeButton("Tidak") { dialog, _ ->
+                        scanning(this)
+                        dialog.dismiss()
+                    }
+                    return@windowAlert it
                 }
             }
-        } else {
-            showAlertDialog()
-        }
-    }
 
-    private fun showAlertDialog() {
-        val alert = AlertDialog.Builder(context!!)
-        alert.setTitle("Peringatan")
-                .setMessage("Apakah Anda Ingin Keluar Dari Aplikasi ini ? ")
-                .setPositiveButton("Ya") { dialog, _ ->
-                    dialog.dismiss()
-                    findNavController(this).popBackStack()
+            CALL_WAITER -> if (barcode != null) {
+                    findNavController(this).navigate(R.id.statusDest)
+            } else {
+                windowAlert(context!!, "Peringatan", "Batalkan untuk memanggil pelayan.") {
+                    it.setPositiveButton("Ya") { dialog, _ ->
+                        findNavController(this).popBackStack()
+                        dialog.dismiss()
+                    }
+                    it.setNegativeButton("Tidak") { dialog, _ ->
+                        scanning(this)
+                        dialog.dismiss()
+                    }
+
+                    return@windowAlert it
                 }
-                .setNegativeButton("Tidak") { dialog, _ ->
-                    scanning(this)
-                    dialog.dismiss()
-                }
-                .create()
-                .show()
+            }
+        }
     }
 }
