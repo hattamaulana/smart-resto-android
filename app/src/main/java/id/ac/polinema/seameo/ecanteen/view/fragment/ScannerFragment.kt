@@ -4,7 +4,7 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/25/19 4:50 PM
+ * Last Modified at 9/25/19 11:50 PM
  */
 
 package id.ac.polinema.seameo.ecanteen.view.fragment
@@ -21,8 +21,9 @@ import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.google.zxing.integration.android.IntentIntegrator
 import id.ac.polinema.seameo.ecanteen.R
 import id.ac.polinema.seameo.ecanteen.R.layout.fragment_scanner
+import id.ac.polinema.seameo.ecanteen.view.utils.AlertDialogCallback
+import id.ac.polinema.seameo.ecanteen.view.utils.alertDialog
 import id.ac.polinema.seameo.ecanteen.view.utils.scanning
-import id.ac.polinema.seameo.ecanteen.view.utils.windowAlert
 import id.ac.polinema.seameo.ecanteen.view_model.ScannerViewModel
 
 class ScannerFragment : Fragment() {
@@ -61,35 +62,28 @@ class ScannerFragment : Fragment() {
             ADD_MENU -> if (barcode != null) {
                     findNavController(this).navigate(R.id.orderDest)
             } else {
-                windowAlert(context!!, "Peringatan", "Semua menu yang di order akan di hapus.") {
-                    it.setPositiveButton("Ya") { dialog, _ ->
-                        findNavController(this).popBackStack()
-                        dialog.dismiss()
-                    }
-                    it.setNegativeButton("Tidak") { dialog, _ ->
-                        scanning(this)
-                        dialog.dismiss()
-                    }
-                    return@windowAlert it
-                }
+                showingAlertDialog("Semua menu yang di order akan di hapus.")
             }
 
             CALL_WAITER -> if (barcode != null) {
                     findNavController(this).navigate(R.id.statusDest)
             } else {
-                windowAlert(context!!, "Peringatan", "Batalkan untuk memanggil pelayan.") {
-                    it.setPositiveButton("Ya") { dialog, _ ->
-                        findNavController(this).popBackStack()
-                        dialog.dismiss()
-                    }
-                    it.setNegativeButton("Tidak") { dialog, _ ->
-                        scanning(this)
-                        dialog.dismiss()
-                    }
-
-                    return@windowAlert it
-                }
+                showingAlertDialog("Batal memanggil waiter")
             }
         }
+    }
+
+    private fun showingAlertDialog(message: String) {
+        alertDialog(context!!, layoutInflater, R.layout.dialog_alert_two_button, message,
+                object : AlertDialogCallback {
+                    override fun positiveButton() {
+                        findNavController(this@ScannerFragment).popBackStack()
+                    }
+
+                    override fun negativeButton() {
+                        scanning(this@ScannerFragment)
+                    }
+                }
+        )
     }
 }

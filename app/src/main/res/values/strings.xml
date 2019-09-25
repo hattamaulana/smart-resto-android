@@ -4,7 +4,7 @@
   ~ Author: Mahatta Maulana
   ~ Github: https://github.com/hattamaulana
   ~
-  ~ Last Modified at 9/20/19 11:15 PM
+  ~ Last Modified at 9/25/19 11:46 PM
   -->
 
 <resources>
@@ -18,4 +18,8 @@
     <string name="txtTotal">Total</string>
     <string name="txtCheckout">Checkout</string>
     <string name="txtPayment">Pembayaran</string>
+    <string name="txtNegativeButton">Tidak</string>
+    <string name="txtPositiveButton">Ya</string>
+    <string name="lblTitleDialog">Peringatan</string>
+    <string name="txtOkDialog">OKE</string>
 </resources>
