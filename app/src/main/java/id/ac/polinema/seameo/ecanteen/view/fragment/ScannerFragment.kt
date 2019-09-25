@@ -4,128 +4,86 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 6/25/19 9:51 AM
+ * Last Modified at 9/25/19 2:59 PM
  */
 
 package id.ac.polinema.seameo.ecanteen.view.fragment
 
-import android.app.AlertDialog
-import android.app.ProgressDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-
-import com.google.firebase.firestore.QueryDocumentSnapshot
+import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.google.zxing.integration.android.IntentIntegrator
-import com.google.zxing.integration.android.IntentResult
+import id.ac.polinema.seameo.ecanteen.R
+import id.ac.polinema.seameo.ecanteen.R.layout.fragment_scanner
+import id.ac.polinema.seameo.ecanteen.view.utils.scanning
+import id.ac.polinema.seameo.ecanteen.view_model.ScannerViewModel
 
-import id.ac.polinema.seameo.ecanteen.contract.ItemContract
-import id.ac.polinema.seameo.ecanteen.model.ItemModel
-import id.ac.polinema.seameo.ecanteen.presenter.scan.ScannerPresenter
-import id.ac.polinema.seameo.ecanteen.view.activity.ScanActivity
-
-class ScannerFragment : Fragment(), ItemContract.View {
-    private val TAG = "SCANNER_FRAGMENT"
-    private var mPresenter: ScannerPresenter? = null
-    private var mProggressDialog: ProgressDialog? = null
-    private var mAlertDialog: AlertDialog? = null
-    private var mBack = 0
-
-    private val callbackSave = object : ItemContract.Scanner.Callback {
-        override fun onSuccess(q: QueryDocumentSnapshot) {
-            mProggressDialog!!.dismiss()
-            val item = q.toObject(ItemModel::class.java)
-            item.id = q.id
-            item.count = 1
-
-            mPresenter!!.save(item)
-
-            fragmentManager!!.beginTransaction()
-                    .replace(ScanActivity.container, ScanResultFragment())
-                    .commitAllowingStateLoss()
-        }
-
-        override fun onFailed() {
-            mBack = 0
-            Toast.makeText(context, "QR-Code Tidak dikenali", Toast.LENGTH_SHORT).show()
-            onStart()
-        }
+class ScannerFragment : Fragment() {
+    private val TAG = this.javaClass.simpleName
+    private val arg by lazy {
+        arguments?.getString("scanFor")
     }
 
-    override fun initPresenter() {
-        mPresenter = ScannerPresenter()
+    companion object {
+        const val ADD_MENU = "ADD_MENU"
+        const val CALL_WAITER = "CALL_WAITER"
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        initPresenter()
-        initView()
+    override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? = inflater.inflate(fragment_scanner, container, false)
 
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onStart() {
-        super.onStart()
+        Log.i(TAG, "Arguments : ${arg}")
 
-        when (mBack) {
-            0 -> IntentIntegrator.forSupportFragment(this)
-                    .setOrientationLocked(true)
-                    .setPrompt("Scann Barcode Sekarang")
-                    .setOrientationLocked(false)
-                    .setCameraId(0)
-                    .setBarcodeImageEnabled(false)
-                    .initiateScan()
-            1 -> mAlertDialog!!.show()
-            2 -> mProggressDialog!!.show()
-        }
+        scanning(this)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val res = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        val result = IntentIntegrator
+                .parseActivityResult(requestCode, resultCode, data)
+        val viewModel = ViewModelProviders.of(this)
+                .get(ScannerViewModel::class.java)
 
-        Log.i(TAG, "onActivityResult: " + res!!.contents)
+        if (result.contents == null) {
+            Log.i(TAG, "Result : ${result.contents}")
 
-        if (res != null) {
-            if (res.contents == null)
-                mBack = 1
-            else {
-                mBack = 2
-                processResult(res.contents)
+            when (arg) {
+                ADD_MENU -> {
+                    findNavController(this).navigate(R.id.orderDest)
+                }
+
+                CALL_WAITER -> {
+                    findNavController(this).navigate(R.id.statusDest)
+                }
             }
-        } else
-            super.onActivityResult(requestCode, resultCode, data)
-    }
-
-    private fun processResult(res: String) {
-        mPresenter!!.find(res, callbackSave)
-    }
-
-    private fun initView() {
-        mAlertDialog = AlertDialog.Builder(context)
-                .setTitle("Peringatan")
-                .setMessage("Jika Anda Kembali Data yang Sudah di Scan Akan Hilang.")
-                .setPositiveButton("Biarkan", positiveButton())
-                .setNegativeButton("Batalkan", negativeButton())
-                .create()
-
-        mProggressDialog = ProgressDialog(context)
-        mProggressDialog!!.setMessage("Loading")
-    }
-
-    private fun positiveButton(): DialogInterface.OnClickListener {
-        return DialogInterface.OnClickListener { dialog, which -> activity!!.finish() }
-    }
-
-    private fun negativeButton(): DialogInterface.OnClickListener {
-        return DialogInterface.OnClickListener { dialog, which ->
-            mAlertDialog!!.dismiss()
-            mBack = 0
-            onStart()
+        } else {
+            showAlertDialog()
         }
+    }
+
+    private fun showAlertDialog() {
+        val alert = AlertDialog.Builder(context!!)
+        alert.setTitle("Peringatan")
+                .setMessage("Apakah Anda Ingin Keluar Dari Aplikasi ini ? ")
+                .setPositiveButton("Ya") { dialog, _ ->
+                    dialog.dismiss()
+                    findNavController(this).popBackStack()
+                }
+                .setNegativeButton("Tidak") { dialog, _ ->
+                    scanning(this)
+                    dialog.dismiss()
+                }
+                .create()
+                .show()
     }
 }

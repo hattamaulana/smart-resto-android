@@ -5,7 +5,7 @@
   ~ Author: Mahatta Maulana
   ~ Github: https://github.com/hattamaulana
   ~
-  ~ Last Modified at 9/20/19 11:54 PM
+  ~ Last Modified at 9/25/19 10:07 AM
   -->
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,7 +40,7 @@
         android:backgroundTint="@android:color/white"
         android:elevation="4dp"
         android:importantForAutofill="no"
-        android:inputType="textPersonName"
+        android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/lblNominal"
         app:layout_constraintTop_toBottomOf="@id/lblNominal" />

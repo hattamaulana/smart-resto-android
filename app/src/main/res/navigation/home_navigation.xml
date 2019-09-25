@@ -4,28 +4,53 @@
   ~ Author: Mahatta Maulana
   ~ Github: https://github.com/hattamaulana
   ~
-  ~ Last Modified at 9/19/19 11:02 PM
+  ~ Last Modified at 9/25/19 2:58 PM
   -->
 
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/home_navigation"
-    app:startDestination="@id/splashScreenDest">
-
-    <fragment
-        android:id="@+id/splashScreenDest"
-        android:name="id.ac.polinema.seameo.ecanteen.view.fragment.SplashScreen"
-        android:label="SplashScreen"
-        tools:layout="@layout/fragment_splashscreen">
-        <action
-            android:id="@+id/toHome"
-            app:destination="@id/homeDest" />
-    </fragment>
+    app:startDestination="@id/homeDest">
 
     <fragment
         android:id="@+id/homeDest"
         android:name="id.ac.polinema.seameo.ecanteen.view.fragment.HomeFragment"
         android:label="HOME"
-        tools:layout="@layout/fragment_home"></fragment>
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/toScanner"
+            app:destination="@id/scannerDest" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/scannerDest"
+        android:name="id.ac.polinema.seameo.ecanteen.view.fragment.ScannerFragment"
+        android:label="HOME"
+        tools:layout="@layout/fragment_scanner">
+        <action
+            android:id="@+id/toOrderDest"
+            app:destination="@id/orderDest" />
+
+        <action
+            android:id="@+id/toStatusDest"
+            app:destination="@id/statusDest" />
+
+        <argument
+            android:name="scanFor"
+            android:defaultValue="addMenu"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/orderDest"
+        android:name="id.ac.polinema.seameo.ecanteen.view.fragment.OrderFragment"
+        android:label="OrderFragment"
+        tools:layout="@layout/fragment_scan_result" />
+
+    <fragment
+        android:id="@+id/statusDest"
+        android:name="id.ac.polinema.seameo.ecanteen.view.fragment.StatusFragment"
+        android:label="StatusFragment"
+        tools:layout="@layout/fragment_status" />
 </navigation>
