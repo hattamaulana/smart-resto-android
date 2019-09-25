@@ -4,7 +4,7 @@
   ~ Author: Mahatta Maulana
   ~ Github: https://github.com/hattamaulana
   ~
-  ~ Last Modified at 9/25/19 4:50 PM
+  ~ Last Modified at 9/25/19 7:16 PM
   -->
 
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
@@ -53,7 +53,7 @@
         android:id="@+id/orderDest"
         android:name="id.ac.polinema.seameo.ecanteen.view.fragment.OrderFragment"
         android:label="OrderFragment"
-        tools:layout="@layout/fragment_scan_result">
+        tools:layout="@layout/fragment_order">
 
         <action
             android:id="@+id/action_orderDest_to_checkoutFragment"
