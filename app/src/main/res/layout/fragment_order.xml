@@ -5,7 +5,7 @@
   ~ Author: Mahatta Maulana
   ~ Github: https://github.com/hattamaulana
   ~
-  ~ Last Modified at 9/26/19 9:07 PM
+  ~ Last Modified at 9/26/19 9:55 PM
   -->
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -91,7 +91,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list_scan_result"
+        android:id="@+id/listScanResult"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"

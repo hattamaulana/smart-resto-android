@@ -4,7 +4,7 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/26/19 9:45 PM
+ * Last Modified at 9/26/19 10:37 PM
  */
 
 package id.ac.polinema.seameo.ecanteen.repository
@@ -43,7 +43,7 @@ class RealtimeDbRepository(_ref: String) {
         })
     }
 
-    fun get(): ValueEventListener {
+    fun get(callback: (p: DataSnapshot)-> Unit): ValueEventListener {
         return reference.addValueEventListener (object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
                 Log.i(TAG, "TASK : CANCELED")
@@ -51,6 +51,7 @@ class RealtimeDbRepository(_ref: String) {
 
             override fun onDataChange(p0: DataSnapshot) {
                 Log.i(TAG, "TASK : DATA CHANGED")
+                callback(p0)
             }
         })
     }
@@ -72,12 +73,10 @@ class RealtimeDbRepository(_ref: String) {
         }
     }
 
-    fun update(data: Map<String, Any>) {
-        val task = reference.updateChildren(data)
+    fun update(child: String, data: Map<String, Any?>) {
+        val task = reference.child(child).updateChildren(data)
 
-        execute(task) {
-
-        }
+        execute(task) {}
     }
 
     private fun <T> execute(task: Task<T>, callback: (it: T) -> Unit) {

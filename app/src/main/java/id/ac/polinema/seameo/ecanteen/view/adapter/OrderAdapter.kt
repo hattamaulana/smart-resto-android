@@ -4,33 +4,37 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/26/19 9:48 PM
+ * Last Modified at 9/26/19 10:52 PM
  */
 
 package id.ac.polinema.seameo.ecanteen.view.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import id.ac.polinema.seameo.ecanteen.R
 import id.ac.polinema.seameo.ecanteen.R.layout.adapter_order
 import id.ac.polinema.seameo.ecanteen.model.OrderModel
+import id.ac.polinema.seameo.ecanteen.view_model.OrderViewModel
 
-class OrderAdapter(private val context: Context) : RecyclerView.Adapter<OrderAdapter.Holder>() {
-    var list: List<OrderModel> = ArrayList()
+class OrderAdapter(private val fragment: Fragment) : RecyclerView.Adapter<OrderAdapter.Holder>() {
+    var listData: List<OrderModel> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder = Holder (
-            LayoutInflater.from(context).inflate(adapter_order, parent, false) )
+            LayoutInflater.from(fragment.context).inflate(adapter_order, parent, false) )
 
-    override fun getItemCount(): Int = list.size
+    override fun getItemCount(): Int = listData.size
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        val order = list[position]
+        val viewModel = ViewModelProviders.of(fragment)
+                .get(OrderViewModel::class.java)
+        val order = listData[position]
         val menu = order.menu
 
         holder.name.text = menu?.name
@@ -43,24 +47,37 @@ class OrderAdapter(private val context: Context) : RecyclerView.Adapter<OrderAda
             holder.cardBody.visibility = View.GONE
         }
 
-        fun mathematic(add: Boolean) {
+        fun mathematic(subtract: Boolean): Int {
             var count = (holder.count.text as String).toInt()
 
-            if (count > 0) {
-                count = if (add) count + 1 else count - 1
-                holder.count.text = "$count"
-            }
+            count = if (subtract) if (count > 1) count - 1
+                                  else count
+                    else count + 1
+
+            holder.count.text = "$count"
+
+            return count
         }
 
         holder.addNote.setOnClickListener {
+            val change = order
             /* End of addNote onClick Listener */ }
         holder.btnRemove.setOnClickListener {
+            viewModel.removeMenu(order.key)
             /* End of btnRemove onClick Listener */ }
         holder.btnSubtract.setOnClickListener {
-            mathematic(false)
+            val change = order
+            val count = mathematic(true)
+
+            change.count = count
+            viewModel.updateData(order.key, change.toMap())
             /* End of btnSubtract onClick Listener */ }
         holder.btnPlus.setOnClickListener {
-            mathematic(true)
+            val change = order
+            val count = mathematic(false)
+
+            change.count = count
+            viewModel.updateData(order.key, change.toMap())
             /* End of btnPlus onClick Listener */ }
     }
 

@@ -5,7 +5,7 @@
   ~ Author: Mahatta Maulana
   ~ Github: https://github.com/hattamaulana
   ~
-  ~ Last Modified at 9/26/19 9:48 PM
+  ~ Last Modified at 9/26/19 10:53 PM
   -->
 
 <androidx.cardview.widget.CardView android:layout_width="match_parent"
@@ -34,8 +34,8 @@
 
             <ImageView
                 android:id="@+id/icRemove"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_marginStart="16dp"
                 android:src="@drawable/ic_remove"
                 app:layout_constraintStart_toStartOf="parent"
@@ -49,6 +49,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:text="Nasi Goreng"
+                android:textAllCaps="true"
                 android:textColor="@color/mainColor"
                 android:textSize="20sp"
                 android:fontFamily="@font/lato_bold"
@@ -63,7 +64,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:text="Rp 1.000"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:fontFamily="@font/lato_bold"
                 app:layout_constraintTop_toBottomOf="@id/txtName"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -72,8 +73,8 @@
 
             <ImageView
                 android:id="@+id/icPlus"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_marginEnd="16dp"
                 android:src="@drawable/ic_plus_soft"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -94,8 +95,8 @@
 
             <ImageView
                 android:id="@+id/icSubtract"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_marginEnd="8dp"
                 android:src="@drawable/ic_subtract"
                 app:layout_constraintEnd_toStartOf="@id/txtCount"

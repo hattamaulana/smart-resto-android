@@ -4,7 +4,7 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/26/19 9:11 PM
+ * Last Modified at 9/26/19 10:33 PM
  */
 
 package id.ac.polinema.seameo.ecanteen.view.fragment
@@ -16,8 +16,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import id.ac.polinema.seameo.ecanteen.R
+import id.ac.polinema.seameo.ecanteen.view.adapter.OrderAdapter
+import id.ac.polinema.seameo.ecanteen.view_model.OrderViewModel
 import kotlinx.android.synthetic.main.fragment_order.*
 
 class OrderFragment : Fragment() {
@@ -27,6 +31,16 @@ class OrderFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val viewModel = ViewModelProviders.of(this)
+                .get(OrderViewModel::class.java)
+        val adapter = OrderAdapter(this)
+
+        listScanResult.layoutManager = LinearLayoutManager(context)
+        listScanResult.adapter = adapter
+
+        // Get Data
+        viewModel.addMenu(adapter)
 
         btnAddMenu.setOnClickListener {
             findNavController(this).popBackStack()
