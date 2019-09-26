@@ -4,7 +4,7 @@
   ~ Author: Mahatta Maulana
   ~ Github: https://github.com/hattamaulana
   ~
-  ~ Last Modified at 9/26/19 1:37 AM
+  ~ Last Modified at 9/26/19 9:07 PM
   -->
 
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
@@ -32,10 +32,7 @@
         tools:layout="@layout/fragment_scanner">
         <action
             android:id="@+id/toOrderDest"
-            app:destination="@id/orderDest"
-            app:launchSingleTop="true"
-            app:popUpTo="@+id/scannerDest"
-            app:popUpToInclusive="true" />
+            app:destination="@id/orderDest" />
 
         <argument
             android:name="scanFor"

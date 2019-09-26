@@ -4,7 +4,7 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/26/19 1:22 AM
+ * Last Modified at 9/26/19 9:07 PM
  */
 
 package id.ac.polinema.seameo.ecanteen.view.fragment
@@ -29,8 +29,8 @@ import id.ac.polinema.seameo.ecanteen.view_model.ScannerViewModel
 class ScannerFragment : Fragment() {
     private val TAG = this.javaClass.simpleName
     private val arg by lazy {
-        arguments?.getString("scanFor")
-    }
+        arguments?.getString("scanFor") }
+    private var _arg: String? = null
 
     companion object {
         const val ADD_MENU = "ADD_MENU"
@@ -46,11 +46,12 @@ class ScannerFragment : Fragment() {
 
         Log.i(TAG, "Arguments : ${arg}")
 
-        scanning(this, when(arg){
+        _arg = when(arg){
             CALL_WAITER -> "SCAN BARCODE MEJA YANG DIGUNAKAN"
             ADD_MENU -> "SCAN BARCODE MENU YANG DIPILIH"
-            else -> "SCAN BARCODE"
-        })
+            else -> "SCAN BARCODE" }
+
+        scanning(this, _arg!!)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -65,15 +66,16 @@ class ScannerFragment : Fragment() {
         when (arg) {
             ADD_MENU -> if (barcode == null) {
                     findNavController(this).navigate(R.id.toOrderDest)
-            } else {
-                showingAlertDialog("Semua menu yang di order akan di hapus.")
-            }
+                    viewModel.scanning("9p3k5dsxQUADQ9TNLRgG")
+                } else {
+                    showingAlertDialog("Semua menu yang di order akan di hapus.")
+                }
 
             CALL_WAITER -> if (barcode == null) {
                     findNavController(this).popBackStack()
-            } else {
-                showingAlertDialog("Batal memanggil waiter")
-            }
+                } else {
+                    showingAlertDialog("Batal memanggil waiter")
+                }
         }
     }
 
@@ -86,7 +88,7 @@ class ScannerFragment : Fragment() {
                     }
 
                     override fun negativeButton() {
-                        scanning(this@ScannerFragment)
+                        scanning(this@ScannerFragment, _arg!!)
                     }
                 }
         )

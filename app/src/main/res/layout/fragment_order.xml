@@ -5,7 +5,7 @@
   ~ Author: Mahatta Maulana
   ~ Github: https://github.com/hattamaulana
   ~
-  ~ Last Modified at 9/25/19 8:01 PM
+  ~ Last Modified at 9/26/19 9:07 PM
   -->
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -103,7 +103,7 @@
         app:layout_constraintTop_toTopOf="@id/guideline" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btn_add_scan"
+        android:id="@+id/btnAddMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="24dp"

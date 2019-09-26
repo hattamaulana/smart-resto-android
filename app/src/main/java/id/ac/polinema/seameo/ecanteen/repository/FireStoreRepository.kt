@@ -4,7 +4,7 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/26/19 11:37 AM
+ * Last Modified at 9/26/19 9:48 PM
  */
 
 package id.ac.polinema.seameo.ecanteen.repository
@@ -12,7 +12,8 @@ package id.ac.polinema.seameo.ecanteen.repository
 import android.util.Log
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.QueryDocumentSnapshot
+import java.util.*
 
 class FireStoreRepository(_collection: String) {
     var collection: String = _collection
@@ -46,22 +47,25 @@ class FireStoreRepository(_collection: String) {
         }
     }
 
-    fun where(
-            key: String, value: String,
-            callback: (it: QuerySnapshot)-> Unit
-    ) {
+    fun search(key: String, value: Objects) {
         val task = database.whereEqualTo(key, value).get()
+        var result: Boolean = false
 
         execute(task) {
-
+            for (document in it) {
+                Log.d(TAG, "${document.id} => ${document.data}")
+            }
         }
     }
 
-    fun get(callback: (it: QuerySnapshot)-> Unit) {
+    fun get(callback: (it: QueryDocumentSnapshot)-> Unit) {
         val task = database.get()
 
         execute(task) {
-
+            for (document in it) {
+                Log.d(TAG, "${document.id} => ${document.data}")
+                callback(document)
+            }
         }
     }
 
