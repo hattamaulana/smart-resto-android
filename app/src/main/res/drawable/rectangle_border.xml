@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2019.
+  ~
+  ~ Author: Mahatta Maulana
+  ~ Github: https://github.com/hattamaulana
+  ~
+  ~ Last Modified at 9/26/19 2:21 PM
+  -->
+
 <shape
         android:shape="rectangle"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <stroke android:color="#3f51b5"
+    <stroke android:color="#2D3436"
             android:width="1dp"
     />
 
