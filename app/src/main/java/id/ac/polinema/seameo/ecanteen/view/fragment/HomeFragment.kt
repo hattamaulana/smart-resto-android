@@ -4,7 +4,7 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/25/19 2:19 PM
+ * Last Modified at 9/26/19 1:57 PM
  */
 
 package id.ac.polinema.seameo.ecanteen.view.fragment
@@ -13,13 +13,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
 import id.ac.polinema.seameo.ecanteen.R
 import id.ac.polinema.seameo.ecanteen.R.id.toScanner
-import id.ac.polinema.seameo.ecanteen.view_model.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment() {
@@ -30,10 +27,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val viewModel = ViewModelProviders.of(this)
-                .get(HomeViewModel::class.java)
-
-        fun navigate(it: LinearLayout, data: String) {
+        fun navigate(it: View, data: String) {
             it.setOnClickListener {
                 val param = Bundle()
                 param.putString("scanFor", data)

@@ -4,7 +4,7 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/25/19 3:35 PM
+ * Last Modified at 9/26/19 1:22 AM
  */
 
 package id.ac.polinema.seameo.ecanteen.view.fragment
@@ -33,7 +33,8 @@ class CheckoutFragment : Fragment() {
                 val name = edtName.text
                 val nominal = edtNonimal.text
 
-                findNavController(this).navigate(R.id.fromCheckoutToHome)
+                findNavController(this)
+                        .popBackStack(R.id.homeDest, true)
             } else {
                 Toast.makeText(context, "Pastikan Input Sesuai", Toast.LENGTH_SHORT)
                         .show()

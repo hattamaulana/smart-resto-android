@@ -4,7 +4,7 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/25/19 1:36 PM
+ * Last Modified at 9/26/19 9:10 AM
  */
 
 package id.ac.polinema.seameo.ecanteen.view.activity
@@ -32,9 +32,8 @@ class HomeActivity : AppCompatActivity() {
         val navController = navHost.navController
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            val currentDest = destination.id
-            Log.i(TAG, "Current Destination : ${resources.getResourceName(currentDest)}")
-
+            val currentDest = resources.getResourceName(destination.id)
+            Log.i(TAG, "Current Destination : $currentDest")
         }
     }
 }

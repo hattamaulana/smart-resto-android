@@ -4,7 +4,7 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/25/19 11:50 PM
+ * Last Modified at 9/26/19 1:22 AM
  */
 
 package id.ac.polinema.seameo.ecanteen.view.fragment
@@ -46,7 +46,11 @@ class ScannerFragment : Fragment() {
 
         Log.i(TAG, "Arguments : ${arg}")
 
-        scanning(this)
+        scanning(this, when(arg){
+            CALL_WAITER -> "SCAN BARCODE MEJA YANG DIGUNAKAN"
+            ADD_MENU -> "SCAN BARCODE MENU YANG DIPILIH"
+            else -> "SCAN BARCODE"
+        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -59,14 +63,14 @@ class ScannerFragment : Fragment() {
         Log.i(TAG, "Result : $barcode")
 
         when (arg) {
-            ADD_MENU -> if (barcode != null) {
-                    findNavController(this).navigate(R.id.orderDest)
+            ADD_MENU -> if (barcode == null) {
+                    findNavController(this).navigate(R.id.toOrderDest)
             } else {
                 showingAlertDialog("Semua menu yang di order akan di hapus.")
             }
 
-            CALL_WAITER -> if (barcode != null) {
-                    findNavController(this).navigate(R.id.statusDest)
+            CALL_WAITER -> if (barcode == null) {
+                    findNavController(this).popBackStack()
             } else {
                 showingAlertDialog("Batal memanggil waiter")
             }
@@ -77,7 +81,8 @@ class ScannerFragment : Fragment() {
         alertDialog(context!!, layoutInflater, R.layout.dialog_alert_two_button, message,
                 object : AlertDialogCallback {
                     override fun positiveButton() {
-                        findNavController(this@ScannerFragment).popBackStack()
+                        findNavController(this@ScannerFragment)
+                                .popBackStack()
                     }
 
                     override fun negativeButton() {

@@ -4,7 +4,7 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 6/24/19 3:51 PM
+ * Last Modified at 9/26/19 11:37 AM
  */
 
 package id.ac.polinema.seameo.ecanteen
@@ -29,7 +29,7 @@ class App : Application() {
     companion object {
         val TAG = "SEAMEO-KANTIN"
 
-        // Firestore
+        // FireStoreRepository
         val ITEM_COLLECTION = "items"
         val TRANSACTION_COLLECTION = "transactions"
 

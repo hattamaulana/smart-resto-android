@@ -5,10 +5,11 @@
   ~ Author: Mahatta Maulana
   ~ Github: https://github.com/hattamaulana
   ~
-  ~ Last Modified at 6/24/19 4:23 PM
+  ~ Last Modified at 9/26/19 12:14 AM
   -->
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="id.ac.polinema.seameo.ecanteen">
 
@@ -16,7 +17,6 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
-
         android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -33,12 +33,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.activity.ScanActivity" />
-
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="sensorPortrait"
-            xmlns:tools="http://schemas.android.com/tools"
             tools:replace="screenOrientation"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="stateAlwaysHidden">
