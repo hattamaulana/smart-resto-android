@@ -4,7 +4,7 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/26/19 10:52 PM
+ * Last Modified at 9/27/19 10:52 AM
  */
 
 package id.ac.polinema.seameo.ecanteen.view.adapter
@@ -39,6 +39,7 @@ class OrderAdapter(private val fragment: Fragment) : RecyclerView.Adapter<OrderA
 
         holder.name.text = menu?.name
         holder.price.text = "Rp. ${menu?.price}"
+        holder.count.text = "${order.count}"
 
         if (! order.note.isNullOrEmpty()) {
             holder.cardBody.visibility = View.VISIBLE

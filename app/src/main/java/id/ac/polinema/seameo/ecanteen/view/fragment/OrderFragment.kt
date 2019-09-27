@@ -4,20 +4,22 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/26/19 10:33 PM
+ * Last Modified at 9/27/19 10:52 AM
  */
 
 package id.ac.polinema.seameo.ecanteen.view.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.ac.polinema.seameo.ecanteen.R
 import id.ac.polinema.seameo.ecanteen.view.adapter.OrderAdapter
@@ -25,6 +27,9 @@ import id.ac.polinema.seameo.ecanteen.view_model.OrderViewModel
 import kotlinx.android.synthetic.main.fragment_order.*
 
 class OrderFragment : Fragment() {
+    private val TAG = this.javaClass.simpleName
+    var amount = -1
+
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_order, container, false)
@@ -42,11 +47,28 @@ class OrderFragment : Fragment() {
         // Get Data
         viewModel.addMenu(adapter)
 
+        viewModel.nominal.observe(this, Observer<Int> {
+            if (it > 0) {
+                amount += it
+                txtTotal.text = "Rp $it"
+            } else {
+                txtTotal.text = ""
+            }
+        })
+
         btnAddMenu.setOnClickListener {
-            findNavController(this).popBackStack()
+            Navigation.findNavController(view).popBackStack()
             /* The End btnAddMenu On Click Listener */ }
         btnCheckout.setOnClickListener {
-            findNavController(this).navigate(R.id.toCheckoutDest)
+            val nominalString = txtTotal.text.toString().substring(3)
+            val nominalInt = nominalString.trim().toInt()
+            Log.d(TAG, "Nominal : $nominalInt")
+
+            val params = Bundle()
+            params.putInt("nominal", nominalInt)
+
+            Navigation.findNavController(view)
+                    .navigate(R.id.toCheckoutDest, params)
             /* The End btnCheckout On Click Listener */}
 
         activity?.onBackPressedDispatcher
@@ -55,8 +77,8 @@ class OrderFragment : Fragment() {
                         // Handle Back Pressed
                         Toast.makeText(context, "BACK PRESSED", Toast.LENGTH_SHORT)
                                 .show()
-                        findNavController(this@OrderFragment)
-                                .popBackStack(R.id.homeDest, true)
+                        Navigation.findNavController(view)
+                                .popBackStack(R.id.homeDest, false)
                     }})
     }
 }

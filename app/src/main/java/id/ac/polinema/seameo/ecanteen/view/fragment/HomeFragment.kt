@@ -4,7 +4,7 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/26/19 1:57 PM
+ * Last Modified at 9/27/19 10:52 AM
  */
 
 package id.ac.polinema.seameo.ecanteen.view.fragment
@@ -14,7 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.Navigation.findNavController
 import id.ac.polinema.seameo.ecanteen.R
 import id.ac.polinema.seameo.ecanteen.R.id.toScanner
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -32,8 +32,7 @@ class HomeFragment : Fragment() {
                 val param = Bundle()
                 param.putString("scanFor", data)
 
-                NavHostFragment.findNavController(this)
-                        .navigate(toScanner, param)
+                findNavController(view).navigate(toScanner, param)
             }
         }
 

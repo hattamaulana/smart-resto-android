@@ -4,7 +4,7 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/26/19 9:07 PM
+ * Last Modified at 9/27/19 10:52 AM
  */
 
 package id.ac.polinema.seameo.ecanteen.view.fragment
@@ -17,7 +17,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.Navigation
 import com.google.zxing.integration.android.IntentIntegrator
 import id.ac.polinema.seameo.ecanteen.R
 import id.ac.polinema.seameo.ecanteen.R.layout.fragment_scanner
@@ -65,14 +65,15 @@ class ScannerFragment : Fragment() {
 
         when (arg) {
             ADD_MENU -> if (barcode == null) {
-                    findNavController(this).navigate(R.id.toOrderDest)
+                Navigation.findNavController(view!!)
+                    .navigate(R.id.toOrderDest)
                     viewModel.scanning("9p3k5dsxQUADQ9TNLRgG")
                 } else {
                     showingAlertDialog("Semua menu yang di order akan di hapus.")
                 }
 
             CALL_WAITER -> if (barcode == null) {
-                    findNavController(this).popBackStack()
+                Navigation.findNavController(view!!).popBackStack()
                 } else {
                     showingAlertDialog("Batal memanggil waiter")
                 }
@@ -83,8 +84,7 @@ class ScannerFragment : Fragment() {
         alertDialog(context!!, layoutInflater, R.layout.dialog_alert_two_button, message,
                 object : AlertDialogCallback {
                     override fun positiveButton() {
-                        findNavController(this@ScannerFragment)
-                                .popBackStack()
+                        Navigation.findNavController(view!!).popBackStack()
                     }
 
                     override fun negativeButton() {
