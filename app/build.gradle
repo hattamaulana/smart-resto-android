@@ -4,7 +4,7 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/24/19 9:46 PM
+ * Last Modified at 9/27/19 2:35 PM
  */
 
 apply plugin: 'com.android.application'
@@ -12,6 +12,10 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: "androidx.navigation.safeargs"
+
+androidExtensions {
+    experimental = true
+}
 
 android {
     compileSdkVersion 29

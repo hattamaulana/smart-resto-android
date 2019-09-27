@@ -4,7 +4,7 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/26/19 10:37 PM
+ * Last Modified at 9/27/19 9:31 PM
  */
 
 package id.ac.polinema.seameo.ecanteen.repository
@@ -24,6 +24,7 @@ class RealtimeDbRepository(_ref: String) {
     var child: List<String>? = null
         set(value) {
             value?.forEach {
+                Log.i(TAG, "child: $it")
                 reference = reference.child(it) }
                 field = value }
 
@@ -31,8 +32,8 @@ class RealtimeDbRepository(_ref: String) {
         reference = database.getReference(_ref)
     }
 
-    fun search(target: String) {
-        reference.equalTo(target).addListenerForSingleValueEvent (object : ValueEventListener {
+    fun getOnce(callback: (p: DataSnapshot) -> Unit) {
+        reference.addListenerForSingleValueEvent (object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
                 Log.i(TAG, "TASK : CANCELED")
             }

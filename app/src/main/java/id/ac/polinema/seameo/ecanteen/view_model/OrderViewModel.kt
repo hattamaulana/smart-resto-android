@@ -4,7 +4,7 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/27/19 10:10 AM
+ * Last Modified at 9/27/19 9:29 PM
  */
 
 package id.ac.polinema.seameo.ecanteen.view_model
@@ -14,6 +14,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import id.ac.polinema.seameo.ecanteen.App
+import id.ac.polinema.seameo.ecanteen.SharedPref
 import id.ac.polinema.seameo.ecanteen.model.OrderModel
 import id.ac.polinema.seameo.ecanteen.repository.FireStoreRepository
 import id.ac.polinema.seameo.ecanteen.repository.RealtimeDbRepository
@@ -21,18 +22,25 @@ import id.ac.polinema.seameo.ecanteen.view.adapter.OrderAdapter
 
 class OrderViewModel(app: Application): AndroidViewModel(app) {
     private val TAG = this.javaClass.simpleName
+    private val sharedPref = SharedPref(app)
     private val firestoreRepo = FireStoreRepository(App.ITEM_COLLECTION)
     private val realtimeDbRepo = RealtimeDbRepository(App.MAIN_REFERENCE)
+
+    companion object {
+        var LIST: List<OrderModel>? = null
+    }
 
     var nominal = MutableLiveData<Int>()
 
     init {
-        realtimeDbRepo.child = listOf(App.ORDER_REFERENCE)
+        realtimeDbRepo.child = listOf(App.ORDER_REFERENCE, sharedPref.uid)
+
+        Log.i(TAG, "UID : ${sharedPref.uid}")
     }
 
     fun addMenu(adapter: OrderAdapter) {
-        val listenData = realtimeDbRepo.get {
-            Log.i(TAG, "Data : ${it.value}")
+        realtimeDbRepo.get {
+            Log.i(TAG, "addMenu() : ${it.value}")
 
             var nominal = 0
             val listData = ArrayList<OrderModel>()
@@ -49,6 +57,7 @@ class OrderViewModel(app: Application): AndroidViewModel(app) {
                 listData.add(order)
             }
 
+            LIST = listData
             adapter.listData = listData
             adapter.notifyDataSetChanged()
         }

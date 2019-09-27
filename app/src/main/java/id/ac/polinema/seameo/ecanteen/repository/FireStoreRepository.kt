@@ -4,7 +4,7 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/26/19 9:48 PM
+ * Last Modified at 9/27/19 11:37 AM
  */
 
 package id.ac.polinema.seameo.ecanteen.repository
@@ -23,7 +23,7 @@ class FireStoreRepository(_collection: String) {
     private val TAG = this.javaClass.simpleName
     private var database = FirebaseFirestore.getInstance().collection(collection)
 
-    fun add(data: Map<String, Any>) {
+    fun add(data: Map<String, Any?>) {
         val task = database.add(data)
 
         execute(task) {

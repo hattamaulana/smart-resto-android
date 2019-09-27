@@ -4,7 +4,7 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/26/19 11:37 AM
+ * Last Modified at 9/27/19 7:23 PM
  */
 
 package id.ac.polinema.seameo.ecanteen
@@ -14,6 +14,7 @@ import android.content.Context
 import androidx.multidex.MultiDex
 
 import com.google.firebase.FirebaseApp
+import java.util.*
 
 class App : Application() {
     override fun onCreate() {
@@ -27,6 +28,7 @@ class App : Application() {
     }
 
     companion object {
+        val UID = UUID.randomUUID().toString()
         val TAG = "SEAMEO-KANTIN"
 
         // FireStoreRepository

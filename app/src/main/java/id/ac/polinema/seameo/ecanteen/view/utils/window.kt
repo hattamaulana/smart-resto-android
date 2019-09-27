@@ -4,7 +4,7 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/25/19 11:50 PM
+ * Last Modified at 9/27/19 11:02 AM
  */
 
 package id.ac.polinema.seameo.ecanteen.view.utils
@@ -32,6 +32,32 @@ fun setWindow(window: Window) {
 interface AlertDialogCallback {
     fun positiveButton()
     fun negativeButton()
+}
+
+fun alertDialog(
+        context: Context, inflater: LayoutInflater, ttle: String, msg: String,
+        callback: () -> Unit
+) {
+    val TAG = "alertDialog()"
+    val dialog = AlertDialog.Builder(context)
+    val view = inflater.inflate(R.layout.dialog_alert_one_button, null)
+    val dialogCreated by lazy { dialog.create() }
+
+    val title = view.findViewById<TextView>(R.id.dialogTitle)
+    val message = view.findViewById<TextView>(R.id.dialogBody)
+    val positiveBtn = view.findViewById<Button>(R.id.btnPositive)
+
+    title.text = ttle
+    message.text = msg
+    positiveBtn.setOnClickListener {
+        Log.d(TAG, "CLICKED")
+        callback()
+        dialogCreated.dismiss()
+    }
+
+    dialog.setView(view)
+    dialog.setCancelable(false)
+    dialogCreated.show()
 }
 
 fun alertDialog(

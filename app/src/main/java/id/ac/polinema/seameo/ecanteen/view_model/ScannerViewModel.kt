@@ -4,7 +4,7 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/26/19 9:48 PM
+ * Last Modified at 9/27/19 9:29 PM
  */
 
 package id.ac.polinema.seameo.ecanteen.view_model
@@ -13,6 +13,7 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import id.ac.polinema.seameo.ecanteen.App
+import id.ac.polinema.seameo.ecanteen.SharedPref
 import id.ac.polinema.seameo.ecanteen.model.MenuModel
 import id.ac.polinema.seameo.ecanteen.model.OrderModel
 import id.ac.polinema.seameo.ecanteen.repository.FireStoreRepository
@@ -20,11 +21,12 @@ import id.ac.polinema.seameo.ecanteen.repository.RealtimeDbRepository
 
 class ScannerViewModel(app: Application) : AndroidViewModel(app) {
     private val TAG = this.javaClass.simpleName
+    private val sharedPref = SharedPref(app)
     private val firestore = FireStoreRepository(App.ITEM_COLLECTION)
     private val realtimeRepo = RealtimeDbRepository(App.MAIN_REFERENCE)
 
     init {
-        realtimeRepo.child = listOf(App.ORDER_REFERENCE)
+        realtimeRepo.child = listOf(App.ORDER_REFERENCE, sharedPref.uid)
     }
 
     fun scanning(data: String) {
