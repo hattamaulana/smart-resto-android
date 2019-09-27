@@ -4,7 +4,7 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/27/19 11:02 AM
+ * Last Modified at 9/27/19 11:31 PM
  */
 
 package id.ac.polinema.seameo.ecanteen.view.utils
@@ -17,6 +17,7 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import id.ac.polinema.seameo.ecanteen.R
@@ -78,10 +79,43 @@ fun alertDialog(
         callback.positiveButton()
         dialogCreated.dismiss()
     }
+
     negativeBtn.setOnClickListener {
         Log.d(TAG, "CLICKED")
 
         callback.negativeButton()
+        dialogCreated.dismiss()
+    }
+
+    dialog.setView(view)
+    dialog.setCancelable(false)
+    dialogCreated.show()
+}
+
+fun alertDialog(
+        context: Context, inflater: LayoutInflater, ttle: String,
+        callback: (it: String) -> Unit
+) {
+    val TAG = "alertDialog()"
+    val dialog = AlertDialog.Builder(context)
+    val view = inflater.inflate(R.layout.dialog_add_data, null)
+    val dialogCreated by lazy { dialog.create() }
+    val title = view.findViewById<TextView>(R.id.dialogTitle)
+    val positiveBtn = view.findViewById<Button>(R.id.btnPositive)
+    val negativeBtn = view.findViewById<Button>(R.id.btnNegative)
+    val note = view.findViewById<EditText>(R.id.edtNote)
+
+    title.text = ttle
+    positiveBtn.setOnClickListener {
+        Log.d(TAG, "CLICKED")
+
+        callback(note.text.toString())
+        dialogCreated.dismiss()
+    }
+
+    negativeBtn.setOnClickListener {
+        Log.d(TAG, "CLICKED: Dialog Dismiss")
+
         dialogCreated.dismiss()
     }
 

@@ -4,7 +4,7 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/27/19 10:52 AM
+ * Last Modified at 9/27/19 11:38 PM
  */
 
 package id.ac.polinema.seameo.ecanteen.view.adapter
@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView
 import id.ac.polinema.seameo.ecanteen.R
 import id.ac.polinema.seameo.ecanteen.R.layout.adapter_order
 import id.ac.polinema.seameo.ecanteen.model.OrderModel
+import id.ac.polinema.seameo.ecanteen.view.utils.alertDialog
 import id.ac.polinema.seameo.ecanteen.view_model.OrderViewModel
 
 class OrderAdapter(private val fragment: Fragment) : RecyclerView.Adapter<OrderAdapter.Holder>() {
@@ -44,8 +45,10 @@ class OrderAdapter(private val fragment: Fragment) : RecyclerView.Adapter<OrderA
         if (! order.note.isNullOrEmpty()) {
             holder.cardBody.visibility = View.VISIBLE
             holder.note.text = order.note
+            holder.addNote.text = "EDIT CATATAN"
         } else {
             holder.cardBody.visibility = View.GONE
+            holder.addNote.text = "TAMBAH CATATAN"
         }
 
         fun mathematic(subtract: Boolean): Int {
@@ -62,6 +65,11 @@ class OrderAdapter(private val fragment: Fragment) : RecyclerView.Adapter<OrderA
 
         holder.addNote.setOnClickListener {
             val change = order
+            alertDialog(fragment.context!!, fragment.layoutInflater, "CATATAN") {
+                change.note = it
+
+                viewModel.updateData(order.key, change.toMap())
+            }
             /* End of addNote onClick Listener */ }
         holder.btnRemove.setOnClickListener {
             viewModel.removeMenu(order.key)

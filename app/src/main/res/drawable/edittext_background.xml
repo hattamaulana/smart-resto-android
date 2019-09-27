@@ -4,7 +4,7 @@
   ~ Author: Mahatta Maulana
   ~ Github: https://github.com/hattamaulana
   ~
-  ~ Last Modified at 9/27/19 10:25 AM
+  ~ Last Modified at 9/27/19 11:04 PM
   -->
 
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
@@ -12,7 +12,7 @@
     <solid android:color="@android:color/white" />
     <corners android:radius="4dp" />
     <stroke
-        android:width="2dp"
+        android:width="1dp"
         android:color="@color/mainColor"/>
     <padding
         android:bottom="8dp"

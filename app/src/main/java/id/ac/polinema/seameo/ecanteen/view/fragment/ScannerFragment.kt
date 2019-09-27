@@ -4,7 +4,7 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/27/19 10:52 AM
+ * Last Modified at 9/27/19 11:28 PM
  */
 
 package id.ac.polinema.seameo.ecanteen.view.fragment
@@ -21,6 +21,7 @@ import androidx.navigation.Navigation
 import com.google.zxing.integration.android.IntentIntegrator
 import id.ac.polinema.seameo.ecanteen.R
 import id.ac.polinema.seameo.ecanteen.R.layout.fragment_scanner
+import id.ac.polinema.seameo.ecanteen.model.CallingWaiterModel
 import id.ac.polinema.seameo.ecanteen.view.utils.AlertDialogCallback
 import id.ac.polinema.seameo.ecanteen.view.utils.alertDialog
 import id.ac.polinema.seameo.ecanteen.view.utils.scanning
@@ -65,14 +66,18 @@ class ScannerFragment : Fragment() {
 
         when (arg) {
             ADD_MENU -> if (barcode == null) {
+                viewModel.scanning("9p3k5dsxQUADQ9TNLRgG")
+
                 Navigation.findNavController(view!!)
                     .navigate(R.id.toOrderDest)
-                    viewModel.scanning("9p3k5dsxQUADQ9TNLRgG")
                 } else {
                     showingAlertDialog("Semua menu yang di order akan di hapus.")
                 }
 
             CALL_WAITER -> if (barcode == null) {
+                alertDialog(context!!, layoutInflater, "BANTUAN") {
+                    viewModel.callingWaiter(CallingWaiterModel("", 0, it)) }
+
                 Navigation.findNavController(view!!).popBackStack()
                 } else {
                     showingAlertDialog("Batal memanggil waiter")

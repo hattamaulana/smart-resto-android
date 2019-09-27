@@ -4,7 +4,7 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/27/19 9:29 PM
+ * Last Modified at 9/27/19 10:57 PM
  */
 
 package id.ac.polinema.seameo.ecanteen.view_model
@@ -14,6 +14,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import id.ac.polinema.seameo.ecanteen.App
 import id.ac.polinema.seameo.ecanteen.SharedPref
+import id.ac.polinema.seameo.ecanteen.model.CallingWaiterModel
 import id.ac.polinema.seameo.ecanteen.model.MenuModel
 import id.ac.polinema.seameo.ecanteen.model.OrderModel
 import id.ac.polinema.seameo.ecanteen.repository.FireStoreRepository
@@ -22,15 +23,17 @@ import id.ac.polinema.seameo.ecanteen.repository.RealtimeDbRepository
 class ScannerViewModel(app: Application) : AndroidViewModel(app) {
     private val TAG = this.javaClass.simpleName
     private val sharedPref = SharedPref(app)
-    private val firestore = FireStoreRepository(App.ITEM_COLLECTION)
-    private val realtimeRepo = RealtimeDbRepository(App.MAIN_REFERENCE)
+    private val menuRepo = FireStoreRepository(App.ITEM_COLLECTION)
+    private val orderRepo = RealtimeDbRepository(App.MAIN_REFERENCE)
+    private val callWaiterRepo = RealtimeDbRepository(App.MAIN_REFERENCE)
 
     init {
-        realtimeRepo.child = listOf(App.ORDER_REFERENCE, sharedPref.uid)
+        orderRepo.child = listOf(App.ORDER_REFERENCE, sharedPref.uid)
+        callWaiterRepo.child = listOf(App.CALL_WAITER_REFERENCE)
     }
 
     fun scanning(data: String) {
-        firestore.get { document ->
+        menuRepo.get { document ->
             if (data == document.id) {
                 Log.i(TAG, "Result : ${document.data}")
 
@@ -42,6 +45,12 @@ class ScannerViewModel(app: Application) : AndroidViewModel(app) {
     private fun saveToRealtime(id: String, data: MenuModel) {
         val params = OrderModel(id, data, 1, "")
 
-         realtimeRepo.add(params.toMap())
+         orderRepo.add(params.toMap())
+    }
+
+    fun callingWaiter(data: CallingWaiterModel) {
+        data.uid = sharedPref.uid
+
+        callWaiterRepo.add(data.toMap())
     }
 }
