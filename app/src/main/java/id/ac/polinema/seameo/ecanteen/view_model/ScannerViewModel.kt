@@ -4,7 +4,7 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/27/19 10:57 PM
+ * Last Modified at 9/29/19 8:59 AM
  */
 
 package id.ac.polinema.seameo.ecanteen.view_model
@@ -29,7 +29,7 @@ class ScannerViewModel(app: Application) : AndroidViewModel(app) {
 
     init {
         orderRepo.child = listOf(App.ORDER_REFERENCE, sharedPref.uid)
-        callWaiterRepo.child = listOf(App.CALL_WAITER_REFERENCE)
+        callWaiterRepo.child = listOf(App.WAITER_REFERENCE, App.WAITER_HELPER_REFERENCE)
     }
 
     fun scanning(data: String) {

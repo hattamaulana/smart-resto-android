@@ -4,7 +4,7 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/27/19 11:41 PM
+ * Last Modified at 9/29/19 8:59 AM
  */
 
 package id.ac.polinema.seameo.ecanteen
@@ -36,6 +36,7 @@ class App : Application() {
         const val MAIN_REFERENCE = "ecanteen"
         const val ORDER_REFERENCE = "order"
         const val KITCHEN_QUEUE = "queue"
-        const val CALL_WAITER_REFERENCE = "call_waiter"
+        const val WAITER_REFERENCE = "waiter"
+        const val WAITER_HELPER_REFERENCE = "help"
     }
 }
