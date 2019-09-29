@@ -4,7 +4,7 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/27/19 9:29 PM
+ * Last Modified at 9/29/19 9:40 AM
  */
 
 package id.ac.polinema.seameo.ecanteen.view_model
@@ -67,11 +67,7 @@ class OrderViewModel(app: Application): AndroidViewModel(app) {
         realtimeDbRepo.update(id, data)
     }
 
-    fun removeMenu(id: String) {
+    fun removeMenu(id: String = "") {
         realtimeDbRepo.remove(id)
     }
-
-    fun addNote() {}
-
-    fun checkout() {}
 }

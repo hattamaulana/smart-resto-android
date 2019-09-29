@@ -4,7 +4,7 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/27/19 11:28 PM
+ * Last Modified at 9/29/19 9:25 AM
  */
 
 package id.ac.polinema.seameo.ecanteen.view.fragment
@@ -86,16 +86,14 @@ class ScannerFragment : Fragment() {
     }
 
     private fun showingAlertDialog(message: String) {
-        alertDialog(context!!, layoutInflater, R.layout.dialog_alert_two_button, message,
-                object : AlertDialogCallback {
-                    override fun positiveButton() {
-                        Navigation.findNavController(view!!).popBackStack()
-                    }
+        alertDialog(context!!, layoutInflater, message, object : AlertDialogCallback {
+            override fun positiveButton() {
+                Navigation.findNavController(view!!).popBackStack()
+            }
 
-                    override fun negativeButton() {
-                        scanning(this@ScannerFragment, _arg!!)
-                    }
-                }
-        )
+            override fun negativeButton() {
+                scanning(this@ScannerFragment, _arg!!)
+            }
+        })
     }
 }

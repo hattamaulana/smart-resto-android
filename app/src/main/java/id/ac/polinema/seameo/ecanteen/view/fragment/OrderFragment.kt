@@ -4,7 +4,7 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/27/19 10:52 AM
+ * Last Modified at 9/29/19 9:49 AM
  */
 
 package id.ac.polinema.seameo.ecanteen.view.fragment
@@ -14,7 +14,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -23,6 +22,8 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.ac.polinema.seameo.ecanteen.R
 import id.ac.polinema.seameo.ecanteen.view.adapter.OrderAdapter
+import id.ac.polinema.seameo.ecanteen.view.utils.AlertDialogCallback
+import id.ac.polinema.seameo.ecanteen.view.utils.alertDialog
 import id.ac.polinema.seameo.ecanteen.view_model.OrderViewModel
 import kotlinx.android.synthetic.main.fragment_order.*
 
@@ -75,10 +76,17 @@ class OrderFragment : Fragment() {
                 ?.addCallback(this, object: OnBackPressedCallback(true){
                     override fun handleOnBackPressed() {
                         // Handle Back Pressed
-                        Toast.makeText(context, "BACK PRESSED", Toast.LENGTH_SHORT)
-                                .show()
-                        Navigation.findNavController(view)
-                                .popBackStack(R.id.homeDest, false)
+                        val msg = "Jika Anda kembali semua order akan di hapus."
+
+                        alertDialog(context!!, layoutInflater, msg, object : AlertDialogCallback {
+                            override fun positiveButton() {
+                                viewModel.removeMenu()
+                                Navigation.findNavController(view)
+                                        .popBackStack(R.id.homeDest, false)
+                            }
+
+                            override fun negativeButton() {}
+                        })
                     }})
     }
 }

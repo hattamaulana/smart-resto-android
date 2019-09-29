@@ -4,7 +4,7 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/27/19 9:31 PM
+ * Last Modified at 9/29/19 9:37 AM
  */
 
 package id.ac.polinema.seameo.ecanteen.repository
@@ -66,12 +66,13 @@ class RealtimeDbRepository(_ref: String) {
         }
     }
 
-    fun remove(idKey: String) {
-        val task = reference.child(idKey).removeValue()
+    fun remove(idKey: String = "") {
+        val task = if (idKey == "")
+            reference.removeValue()
+        else
+            reference.child(idKey).removeValue()
 
-        execute(task) {
-
-        }
+        execute(task) { Log.i(TAG, "remove() : DONE") }
     }
 
     fun update(child: String, data: Map<String, Any?>) {

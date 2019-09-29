@@ -4,7 +4,7 @@
  * Author: Mahatta Maulana
  * Github: https://github.com/hattamaulana
  *
- * Last Modified at 9/27/19 11:31 PM
+ * Last Modified at 9/29/19 9:25 AM
  */
 
 package id.ac.polinema.seameo.ecanteen.view.utils
@@ -62,12 +62,12 @@ fun alertDialog(
 }
 
 fun alertDialog(
-        context: Context, inflater: LayoutInflater, restId: Int, msg: String,
+        context: Context, inflater: LayoutInflater, msg: String,
         callback: AlertDialogCallback
 ) {
     val TAG = "alertDialog()"
     val dialog = AlertDialog.Builder(context)
-    val view = inflater.inflate(restId, null)
+    val view = inflater.inflate(R.layout.dialog_alert_two_button, null)
     val dialogCreated by lazy { dialog.create() }
     val message = view.findViewById<TextView>(R.id.dialogMessage)
     val positiveBtn = view.findViewById<Button>(R.id.btnPositive)
