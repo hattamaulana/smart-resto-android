@@ -58,11 +58,10 @@ class RealtimeDbRepository(_ref: String) {
     }
 
     fun add(data: Map<String, Any?>) {
-        val key = reference.push().key
         val task = reference.push().setValue(data)
 
         execute(task) {
-
+            Log.i(TAG, "Berhasil Menambahkan Data Status")
         }
     }
 

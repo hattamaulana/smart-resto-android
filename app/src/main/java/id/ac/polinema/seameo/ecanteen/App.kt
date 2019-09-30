@@ -38,5 +38,6 @@ class App : Application() {
         const val KITCHEN_QUEUE = "queue"
         const val WAITER_REFERENCE = "waiter"
         const val WAITER_HELPER_REFERENCE = "help"
+        const val STATUS_REF = "status";
     }
 }

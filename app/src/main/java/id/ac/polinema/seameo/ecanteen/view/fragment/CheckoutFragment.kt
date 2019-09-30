@@ -33,6 +33,8 @@ class CheckoutFragment : Fragment() {
     private val TAG = this.javaClass.simpleName
     private val argNominal by lazy {
         arguments?.getInt("nominal") }
+    private val noTable by lazy {
+        arguments?.getInt("noTable") }
     private val viewModel by lazy { ViewModelProviders.of(this)
             .get(CheckoutViewModel::class.java) }
 
@@ -42,6 +44,8 @@ class CheckoutFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        Log.i(TAG, "No Meja : $noTable")
 
         val sharedPref = SharedPref(activity!!.application)
 
@@ -58,7 +62,7 @@ class CheckoutFragment : Fragment() {
                     val cashback = money.toInt() - argNominal!!
                     val param = TransactionModel(
                             sharedPref.uid, name, dateTime,
-                            OrderViewModel.LIST, 1,
+                            OrderViewModel.LIST, noTable!!,
                             money.toInt(), cashback, argNominal!!)
 
                     viewModel.pay(param)

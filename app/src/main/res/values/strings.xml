@@ -22,4 +22,7 @@
     <string name="txtPositiveButton">Ya</string>
     <string name="lblTitleDialog">Peringatan</string>
     <string name="txtOkDialog">OKE</string>
+
+    <string name="statusQueue">Pesanan Masih Di Masak</string>
+    <string name="statusReady">Pesanan Sudah Siap</string>
 </resources>

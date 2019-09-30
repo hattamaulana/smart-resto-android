@@ -22,6 +22,7 @@ import com.google.zxing.integration.android.IntentIntegrator
 import id.ac.polinema.seameo.ecanteen.R
 import id.ac.polinema.seameo.ecanteen.R.layout.fragment_scanner
 import id.ac.polinema.seameo.ecanteen.model.CallingWaiterModel
+import id.ac.polinema.seameo.ecanteen.SharedPref
 import id.ac.polinema.seameo.ecanteen.view.utils.AlertDialogCallback
 import id.ac.polinema.seameo.ecanteen.view.utils.alertDialog
 import id.ac.polinema.seameo.ecanteen.view.utils.scanning
@@ -61,24 +62,34 @@ class ScannerFragment : Fragment() {
         val viewModel = ViewModelProviders.of(this)
                 .get(ScannerViewModel::class.java)
         val barcode = result.contents
-
         Log.i(TAG, "Result : $barcode")
 
         when (arg) {
-            ADD_MENU -> if (barcode == null) {
-                viewModel.scanning("9p3k5dsxQUADQ9TNLRgG")
+            ADD_MENU -> if (barcode != null) {
+                val index = barcode.indexOf('-')
+                val noMeja = barcode.substring(0, index).toInt()
+                val idMenu = barcode.substring(index+1)
+
+                Log.i(TAG, "Result : $noMeja")
+
+                viewModel.scanning(idMenu)
+                val bundle = Bundle()
+                    bundle.putInt("noTable", noMeja)
 
                 Navigation.findNavController(view!!)
-                    .navigate(R.id.toOrderDest)
+                    .navigate(R.id.toOrderDest, bundle)
                 } else {
                     showingAlertDialog("Semua menu yang di order akan di hapus.")
                 }
 
-            CALL_WAITER -> if (barcode == null) {
-                alertDialog(context!!, layoutInflater, "BANTUAN") {
-                    viewModel.callingWaiter(CallingWaiterModel("", 0, it)) }
+            CALL_WAITER -> if (barcode != null) {
+                Log.i(TAG, "Barcode : $barcode")
 
-                Navigation.findNavController(view!!).popBackStack()
+                alertDialog(context!!, layoutInflater, "BANTUAN") {
+                    viewModel.callingWaiter(CallingWaiterModel(
+                            "", barcode.toInt(), it)) }
+
+                    Navigation.findNavController(view!!).popBackStack()
                 } else {
                     showingAlertDialog("Batal memanggil waiter")
                 }

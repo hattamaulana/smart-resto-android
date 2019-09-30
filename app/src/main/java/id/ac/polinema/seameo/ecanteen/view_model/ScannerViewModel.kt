@@ -32,12 +32,16 @@ class ScannerViewModel(app: Application) : AndroidViewModel(app) {
         callWaiterRepo.child = listOf(App.WAITER_REFERENCE, App.WAITER_HELPER_REFERENCE)
     }
 
-    fun scanning(data: String) {
+    fun scanning(data: String, noMeja: Int = -1) {
         menuRepo.get { document ->
             if (data == document.id) {
                 Log.i(TAG, "Result : ${document.data}")
 
-                saveToRealtime(document.id, document.toObject(MenuModel::class.java))
+                if (noMeja == -1) {
+                    saveToRealtime(document.id, document.toObject(MenuModel::class.java))
+                } else {
+                    saveToRealtime(document.id, document.toObject(MenuModel::class.java))
+                }
             }
         }
     }

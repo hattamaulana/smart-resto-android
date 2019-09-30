@@ -18,4 +18,6 @@
     <color name="mainColor">#0984E3</color>
     <color name="darkColor">#2D3436</color>
     <color name="softTextColor">#B2BEC3</color>
+
+    <color name="bgStatus">#F9F9F9</color>
 </resources>
